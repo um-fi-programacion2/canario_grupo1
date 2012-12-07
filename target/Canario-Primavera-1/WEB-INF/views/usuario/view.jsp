@@ -17,7 +17,7 @@
 </head>	
 <body>
 <div class="container">
-	<h1>u
+	<h1>
 		View Account
 	</h1>
 	<div class="span-12 last">	

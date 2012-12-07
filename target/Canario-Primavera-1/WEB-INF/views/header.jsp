@@ -44,7 +44,7 @@
           <a class="brand" href="#"><img src="./resources/img/logo.png" width="20"> Proyecto CANARIO</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
+              <li class="active"><a href="usuario">Home</a></li>
               <li><a href="#about">Quiénes somos</a></li>
               <li><a href="#contact">Contacto</a></li>
             </ul>
