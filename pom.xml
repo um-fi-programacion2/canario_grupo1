@@ -105,6 +105,41 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>
+	 <dependency>
+	  <groupId>org.hibernate</groupId>
+	  <artifactId>hibernate</artifactId>
+	  <version>3.2.5.ga</version>
+	 </dependency>
+	 <dependency>
+	  <groupId>org.hibernate</groupId>
+	  <artifactId>hibernate-entitymanager</artifactId>
+	  <version>3.3.2.GA</version>
+	 </dependency>
+	 <dependency>
+	  <groupId>javax.sql</groupId>
+	  <artifactId>jdbc-stdext</artifactId>
+	  <version>2.0</version>
+	 </dependency>
+	 <dependency>
+	  <groupId>javax.transaction</groupId>
+	  <artifactId>jta</artifactId>
+	  <version>1.0.1B</version>
+	 </dependency>
+	 <dependency>
+	  <groupId>org.hibernate</groupId>
+	  <artifactId>ejb3-persistence</artifactId>
+	  <version>1.0.1.GA</version>
+	 </dependency>
+	 <dependency>
+	  <groupId>unknown.binary</groupId>
+	  <artifactId>derbyclient</artifactId>
+	  <version>SNAPSHOT</version>
+	 </dependency>
+	 <dependency>
+	  <groupId>unknown.binary</groupId>
+	  <artifactId>mysql-connector-java-5.1.13-bin</artifactId>
+	  <version>SNAPSHOT</version>
+	 </dependency>
 	</dependencies>
 	<repositories>
 		<!-- For Hibernate Validator -->
@@ -114,6 +149,17 @@
 			<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
 			<snapshots><enabled>false</enabled></snapshots>			
 		</repository>
+	 <repository>
+	  <url>http://download.java.net/maven/2/</url>
+	  <id>hibernate-support</id>
+	  <layout>default</layout>
+	  <name>Repository for library Library[hibernate-support]</name>
+	 </repository>
+	 <repository>
+	  <id>unknown-jars-temp-repo</id>
+	  <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
+	  <url>file:${project.basedir}/lib</url>
+	 </repository>
 	</repositories>
 	<build>
 		<plugins>

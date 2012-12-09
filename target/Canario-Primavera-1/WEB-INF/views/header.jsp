@@ -1,5 +1,6 @@
 <%@include file="includes.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
 <!DOCTYPE html>
@@ -12,16 +13,17 @@
     <meta name="author" content="Grupo1 UNIVERSIDAD DE MENDOZA">
 
     <!-- Le styles -->
-    <link href="./resources/css/bootstrap.css" rel="stylesheet">
+    
+    <link  href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 60px;
         padding-bottom: 40px;
       }
     </style>
-    <link href="./resources/css/bootstrap-responsive.css" rel="stylesheet">
-    <link rel="shortcut icon" href="./img/resources/favicon.ico" type="image/x-icon" />
-    <link rel="icon" href="./resources/img/favicon.ico" type="image/x-icon" />
+    <link href="<c:url value="/resources/css/bootstrap-responsive.css" />" rel="stylesheet">
+    <link rel="shortcut icon" href="<c:url value="/img/resources/favicon.ico" />" type="image/x-icon" />
+    <link rel="icon" href="<c:url value="/resources/img/favicon.ico" />" type="image/x-icon" />
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -41,10 +43,10 @@
             <span class="icon-bar"></span>
           </a>
           
-          <a class="brand" href="#"><img src="./resources/img/logo.png" width="20"> Proyecto CANARIO</a>
+            <a class="brand" href="#"><img src="<c:url value="/resources/img/logo.png" />" width="20"> Proyecto CANARIO</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="usuario">Home</a></li>
+                <li class="active"><a href="<c:url value="/usuario" />">Home</a></li>
               <li><a href="#about">Quiénes somos</a></li>
               <li><a href="#contact">Contacto</a></li>
             </ul>
