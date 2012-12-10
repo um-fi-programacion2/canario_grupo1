@@ -2,6 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,9 +52,10 @@
               <li><a href="#about">Quiénes somos</a></li>
             </ul>
                 <div style="float: right; text-align: right; display: inline-block; padding-top: 10px; color: #FFF; padding-right: 15px">
-                    <a href="<c:url value="usuario/perfil" />" style="color:#FFF;"> <%= session.getAttribute("email") %></a>
+                    <a href="<c:url value="/Canario-Primavera-1/usuario/perfil" />" style="color:#FFF;"> <%= session.getAttribute("email") %></a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="<c:url value="usuario/cerrarSesion" />" style=" font-weight: bold;">Cerrar sesión</a>
+                    
+                    <a href="<fmt:message key="url.app"/>usuario/cerrarSesion" style=" font-weight: bold;">Cerrar sesión</a>
                 </div> 
              
 <!-- 
