@@ -4,12 +4,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import um.canario.grupo1.models.beans.UsuariosBean;
 import um.canario.grupo1.models.dao.UsuariosDao;
 
@@ -21,11 +21,10 @@ public class UsuarioController {
 	private Map<Long, UsuariosBean> users = new ConcurrentHashMap<Long, UsuariosBean>();
         
         @RequestMapping(value="/registrar" , method=RequestMethod.POST)
-        public String registrar(@ModelAttribute("usuario") UsuariosBean usuario) {
+        public String registrar(@ModelAttribute("usuario") UsuariosBean usuario, HttpServletRequest request) {
                
-            UsuariosDao usuarioDao = new UsuariosDao();
-               
-               if(usuarioDao.registrar(usuario) && usuarioDao.iniciarSesion(usuario)){
+             UsuariosDao usuarioDao = new UsuariosDao();               
+               if(usuarioDao.registrar(usuario) && usuarioDao.iniciarSesion(usuario, request)){
                    return "redirect:/usuario/home";
                }
                else{
@@ -38,7 +37,20 @@ public class UsuarioController {
              model.addAttribute("usuario", new UsuariosBean());
              return "usuario/home";
         }
+
+        @RequestMapping(value="/perfil" , method=RequestMethod.GET)
+        public String perfil(Model model) {                  
+             model.addAttribute("usuario", new UsuariosBean());
+             return "usuario/perfil";
+        }
         
+        @RequestMapping(value="/cerrarSesion" , method=RequestMethod.GET)
+        public String cerrarSession(Model model, HttpServletRequest request) {                  
+             UsuariosDao usuarioDao = new UsuariosDao();
+             usuarioDao.cerrarSesion(request);
+             model.addAttribute("usuario", new UsuariosBean());
+             return "redirect:/";
+        }
         
        @RequestMapping(value="/registrar" , method=RequestMethod.GET)
         public String registrar2(Model model) {                  
@@ -47,10 +59,10 @@ public class UsuarioController {
         }
         
         @RequestMapping(value="/iniciarSesion" , method=RequestMethod.POST)
-        public String iniciarSesion(@ModelAttribute("usuario") UsuariosBean usuario, Model model) {
+        public String iniciarSesion(@ModelAttribute("usuario") UsuariosBean usuario, HttpServletRequest request) {
                UsuariosDao usuarioDao = new UsuariosDao();
-               if(usuarioDao.iniciarSesion(usuario)){
-                   model.addAttribute("email", usuario.getEmail());
+               if(usuarioDao.iniciarSesion(usuario,request)){
+                  
                    return "redirect:/timeline";
                }
                else{

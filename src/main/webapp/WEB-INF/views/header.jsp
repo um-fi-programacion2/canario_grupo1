@@ -46,11 +46,16 @@
             <a class="brand" href="#"><img src="<c:url value="/resources/img/logo.png" />" width="20"> Proyecto CANARIO</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-                <li class="active"><a href="<c:url value="/usuario" />">Home</a></li>
+              <li class="active"><a href="<c:url value="/usuario/home" />">Home</a></li>
+              <li><a href="<c:url value="/timeline" />">Timeline</a></li>
               <li><a href="#about">Quiénes somos</a></li>
-              <li><a href="#contact">Contacto</a></li>
             </ul>
-              Logueado como: ${email}                <a href="usuario/cerrarSesion" />
+                <div style="float: right; text-align: right; display: inline-block; padding-top: 10px; color: #FFF; padding-right: 15px">
+                    <a href="<c:url value="usuario/perfil" />" style="color:#FFF;"> <%= session.getAttribute("email") %></a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="<c:url value="usuario/cerrarSesion" />" style=" font-weight: bold;">Cerrar sesión</a>
+                </div> 
+             
 <!-- 
             <form class="navbar-form pull-right">
               <input class="span2" type="text" placeholder="Email">

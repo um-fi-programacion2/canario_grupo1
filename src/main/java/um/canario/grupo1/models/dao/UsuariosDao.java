@@ -4,6 +4,7 @@ package um.canario.grupo1.models.dao;
 
 
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -41,11 +42,11 @@ public class UsuariosDao extends HibernateDaoSupport  {
 
     }
     
-    public boolean iniciarSesion(UsuariosBean usuario){
+    public boolean iniciarSesion(UsuariosBean usuario, HttpServletRequest request ){
         
        List<UsuariosBean> listaUsuarios = null;
        
-           SessionFactory sf = HibernateUtil.getSessionFactory();
+       SessionFactory sf = HibernateUtil.getSessionFactory();
 		
        Session s = sf.openSession();
 	
@@ -64,10 +65,20 @@ public class UsuariosDao extends HibernateDaoSupport  {
             }
             else {
                 usuario = listaUsuarios.get(0);
-                //Map auth = ActionContext.getContext().getSession();
-                //auth.put("idusuario", usuario.getIdu());
+                request.getSession().setAttribute( "email", usuario.getEmail() );
+                request.getSession().setAttribute( "id", usuario.getId() );
+                
                  
                 return true;
             }
+    }
+    
+    public boolean cerrarSesion(HttpServletRequest request){
+        
+            request.getSession().removeAttribute( "email");
+            request.getSession().removeAttribute( "id" );
+            request.getSession().invalidate();
+
+            return true;
     }
 }
