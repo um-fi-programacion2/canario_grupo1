@@ -3,25 +3,16 @@ package um.canario.grupo1.frontWeb.Controllers;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.hibernate.Hibernate;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import um.canario.grupo1.frontWeb.ResourceNotFoundException;
+import org.springframework.web.servlet.ModelAndView;
 import um.canario.grupo1.models.beans.UsuariosBean;
 import um.canario.grupo1.models.dao.UsuariosDao;
-import um.canario.grupo1.models.logic.UsuariosLogic;
-import um.canario.grupo1.utils.HibernateUtil;
+
 
 @Controller
 @RequestMapping(value="/usuario")
@@ -29,63 +20,43 @@ public class UsuarioController {
 
 	private Map<Long, UsuariosBean> users = new ConcurrentHashMap<Long, UsuariosBean>();
         
-        
         @RequestMapping(value="/registrar" , method=RequestMethod.POST)
         public String registrar(@ModelAttribute("usuario") UsuariosBean usuario) {
-             
-           
-               UsuariosDao usuarioDao = new UsuariosDao();
-                
-               if(usuarioDao.registrar(usuario) && usuarioDao.iniciarSesion(usuario))
-                   return "usuario/formularioRegistro";
                
-               else
-                   return "index";
+            UsuariosDao usuarioDao = new UsuariosDao();
                
-           // t = sesion.beginTransaction();
-            
-            //Query query = sesion.createQuery("FROM UsuariosBean t where t.id=:id");
-            
-           // Query query = sesion.createQuery("FROM UsuariosBean t where t.id=1");
-            //Map auth = ActionContext.getContext().getSession();
-                 
-            //usuario = (UsuariosBean) query.list().get(0);
-            
-            //System.out.println("PRUEBAAAAAAAAAA" + usuario.getNombre());
-/*
-            String SQL_QUERY ="INSERT INTO usuarios VALUES(1,1,1,1,1,1,1,1);";
-            Query query = session.createSQLQuery(SQL_QUERY).addEntity(UsuariosBean.class);
-;
-            UsuariosBean userProfile = (UsuariosBean)query.uniqueResult();
-            session.close();
-            
-            
-           
-//             UsuariosLogic usuarioLogic = (UsuariosLogic)appContext.getBean("usuarioLogic");             
-                    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-                    session.beginTransaction();
-                    session.save(usuario);
-                    session.getTransaction().commit();
-             try {
-                    System.out.println("HOLAAAAAAAAAAAA");
-                } catch (Exception e) {
-                    System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-                    e.printStackTrace();
-                }
-             */
-             //usuarioLogic.save(usuario);
-                     //return "usuario/formularioRegistro";
+               if(usuarioDao.registrar(usuario) && usuarioDao.iniciarSesion(usuario)){
+                   return "redirect:/usuario/home";
+               }
+               else{
+                   return "redirect:/index";
+               }
+        }   
+        
+        @RequestMapping(value="/home" , method=RequestMethod.GET)
+        public String home(Model model) {                  
+             model.addAttribute("usuario", new UsuariosBean());
+             return "usuario/home";
         }
         
         
        @RequestMapping(value="/registrar" , method=RequestMethod.GET)
-        public String registrar2(Model model) {
-                           
+        public String registrar2(Model model) {                  
              model.addAttribute("usuario", new UsuariosBean());
-             
              return "usuario/formularioRegistro";
         }
-                
+        
+        @RequestMapping(value="/iniciarSesion" , method=RequestMethod.POST)
+        public String iniciarSesion(@ModelAttribute("usuario") UsuariosBean usuario, Model model) {
+               UsuariosDao usuarioDao = new UsuariosDao();
+               if(usuarioDao.iniciarSesion(usuario)){
+                   model.addAttribute("email", usuario.getEmail());
+                   return "redirect:/timeline";
+               }
+               else{
+                   return "redirect:/";
+               }
+        }
         
 /*	
 	@RequestMapping(method=RequestMethod.GET)

@@ -13,7 +13,7 @@ public class UsuariosLogic {
 	}
 
 	public void save(UsuariosBean usuarioBean){
-		usuarioDao.save(usuarioBean);
+	//	usuarioDao.save(usuarioBean);
 	}
 /* 
 	public void update(UsuariosDao usuarioDao){

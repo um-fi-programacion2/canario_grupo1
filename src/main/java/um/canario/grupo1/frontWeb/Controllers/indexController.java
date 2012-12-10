@@ -14,8 +14,15 @@ public class indexController {
 	@RequestMapping(method=RequestMethod.GET)
         public String index(Model model) {
             model.addAttribute("usuario", new UsuariosBean());
-                    return "usuario/formularioRegistro";
+                    return "index";
         }
+               
+        @RequestMapping(value="/timeline" , method=RequestMethod.GET)
+        public String timeline(Model model) {
+            model.addAttribute("usuario", new UsuariosBean());
+                    return "timeline";
+        }
+        
         
         
 /*	

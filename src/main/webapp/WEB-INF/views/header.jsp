@@ -1,7 +1,7 @@
 <%@include file="includes.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,11 +50,14 @@
               <li><a href="#about">Quiénes somos</a></li>
               <li><a href="#contact">Contacto</a></li>
             </ul>
+              Logueado como: ${email}                <a href="usuario/cerrarSesion" />
+<!-- 
             <form class="navbar-form pull-right">
               <input class="span2" type="text" placeholder="Email">
               <input class="span2" type="password" placeholder="Password">
               <button type="submit" class="btn">Iniciar sesión</button>
             </form>
+-->               
           </div><!--/.nav-collapse -->
         </div>
       </div>
