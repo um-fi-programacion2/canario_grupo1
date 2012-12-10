@@ -9,25 +9,23 @@
             <generator class="identity" />
         </id>
         <property name="nombre" type="string">
-            <column name="nombre" length="50" not-null="true" />
+            <column name="nombre" length="50" not-null="false" />
         </property>
         <property name="email" type="string">
-            <column name="email" length="50" not-null="true" />
+            <column name="email" length="50" not-null="false" />
         </property>
         <property name="imagen" type="string">
-            <column name="imagen" length="50" not-null="true" />
+            <column name="imagen" length="50" not-null="false"  />
         </property>
         <property name="password" type="string">
-            <column name="password" length="50" not-null="true" />
+            <column name="password" length="50" not-null="false" />
         </property>
         <property name="localidad" type="string">
-            <column name="localidad" length="50" not-null="true" />
+            <column name="localidad" length="50" not-null="false" />
         </property>
-        <property name="provincia" type="string">
-            <column name="provincia" length="50" not-null="true" />
-        </property>
+        
         <property name="biografia" type="string">
-            <column name="biografia" length="200" not-null="true" />
+            <column name="biografia" length="200" not-null="false" />
         </property>
     </class>
 </hibernate-mapping>

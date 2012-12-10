@@ -3,8 +3,11 @@ package um.canario.grupo1.frontWeb.Controllers;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -20,8 +23,6 @@ import um.canario.grupo1.models.dao.UsuariosDao;
 import um.canario.grupo1.models.logic.UsuariosLogic;
 import um.canario.grupo1.utils.HibernateUtil;
 
-
-
 @Controller
 @RequestMapping(value="/usuario")
 public class UsuarioController {
@@ -32,8 +33,26 @@ public class UsuarioController {
         @RequestMapping(value="/registrar" , method=RequestMethod.POST)
         public String registrar(@ModelAttribute("usuario") UsuariosBean usuario) {
              
+           
+               UsuariosDao usuarioDao = new UsuariosDao();
+                
+               if(usuarioDao.registrar(usuario) && usuarioDao.iniciarSesion(usuario))
+                   return "usuario/formularioRegistro";
+               
+               else
+                   return "index";
+               
+           // t = sesion.beginTransaction();
             
-            Session session = HibernateUtil.getSessionFactory().openSession();
+            //Query query = sesion.createQuery("FROM UsuariosBean t where t.id=:id");
+            
+           // Query query = sesion.createQuery("FROM UsuariosBean t where t.id=1");
+            //Map auth = ActionContext.getContext().getSession();
+                 
+            //usuario = (UsuariosBean) query.list().get(0);
+            
+            //System.out.println("PRUEBAAAAAAAAAA" + usuario.getNombre());
+/*
             String SQL_QUERY ="INSERT INTO usuarios VALUES(1,1,1,1,1,1,1,1);";
             Query query = session.createSQLQuery(SQL_QUERY).addEntity(UsuariosBean.class);
 ;
@@ -41,7 +60,7 @@ public class UsuarioController {
             session.close();
             
             
-            /*
+           
 //             UsuariosLogic usuarioLogic = (UsuariosLogic)appContext.getBean("usuarioLogic");             
                     Session session = HibernateUtil.getSessionFactory().getCurrentSession();
                     session.beginTransaction();
@@ -55,7 +74,7 @@ public class UsuarioController {
                 }
              */
              //usuarioLogic.save(usuario);
-                     return "usuario/formularioRegistro";
+                     //return "usuario/formularioRegistro";
         }
         
         
