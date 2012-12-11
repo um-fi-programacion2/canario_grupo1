@@ -1,20 +1,13 @@
 package um.canario.grupo1.models.dao;
 
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.FlushModeType;
-import javax.persistence.LockModeType;
 import javax.servlet.http.HttpServletRequest;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import um.canario.grupo1.models.beans.UsuarioBean;
-import um.canario.grupo1.models.beans.ImageBean;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.web.multipart.MultipartFile;
 import um.canario.grupo1.utils.HibernateUtil;
 
 public class UsuarioDao extends HibernateDaoSupport  {
@@ -90,18 +83,13 @@ public class UsuarioDao extends HibernateDaoSupport  {
             return true;
     }
     
-    
     public boolean modificarPerfil(UsuarioBean usuario, HttpServletRequest request) {
            
                 try {
                     SessionFactory sesion = HibernateUtil.getSessionFactory();
                     Transaction t = null;
                     Session session = sesion.openSession();
-                    //Query query = session.createQuery("FROM UsuariosBean t where t.id=1");
                     t = session.beginTransaction();
-                            
-                    //                   set u.nombre = :nombre u.email = :email u.imagen = :imagen u.password = :password u.localidad = :localidad u.biografia = :biografia" + " where u.id = :id");
-
                     Query query = session.createQuery("update UsuarioBean u set u.nombre = :nombre, u.email = :email, u.password = :password, u.localidad = :localidad, u.biografia = :biografia " 
                             + " where u.id = :id");
                     query.setParameter("nombre", usuario.getNombre());
@@ -123,12 +111,28 @@ public class UsuarioDao extends HibernateDaoSupport  {
                 }
     }
     
-        public boolean modificarImagen(ImageBean imagen, MultipartFile file) {
-           
+    public boolean actualizarImagen(String filename, HttpServletRequest request){
+           try {
+                    SessionFactory sesion = HibernateUtil.getSessionFactory();
+                    Transaction t = null;
+                    Session session = sesion.openSession();
+                    t = session.beginTransaction();
+                    Query query = session.createQuery("update UsuarioBean u set u.imagen = :imagen " 
+                            + " where u.id = :id");
+                    query.setParameter("imagen", filename);
+                    query.setParameter("id", request.getSession().getAttribute("id"));
+                    query.executeUpdate();
+                    session.getTransaction().commit();
+                    session.close();
                     
                     return true;
 
- 
-    }
+                } catch (Exception e) {
+                    System.err.println("Error !-->" + e.getMessage()); 
+                    return false;
+                }
     
+        
+        
+    }
 }

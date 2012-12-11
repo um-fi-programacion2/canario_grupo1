@@ -1,11 +1,8 @@
 package um.canario.grupo1.frontWeb.Controllers;
 
-import java.io.IOException;
-import java.util.List;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import um.canario.grupo1.models.beans.UsuarioBean;
-//import um.canario.grupo1.models.beans.ImageBean;
 import um.canario.grupo1.models.dao.UsuarioDao;
+import um.canario.grupo1.models.logic.UsuarioLogic;
 
 
 @Controller
@@ -71,46 +68,13 @@ public class UsuarioController {
         
         
         @RequestMapping(value = "/perfil/imagen/procesar", method = RequestMethod.POST)
-        public String modificarImagen(@RequestParam("file") MultipartFile file) {
-          
-            /*
-              try {
-                List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-                for (FileItem item : items) {
-                    if (item.isFormField()) {
-                        // Process regular form field (input type="text|radio|checkbox|etc", select, etc).
-                        String fieldname = item.getFieldName();
-                        String fieldvalue = item.getString();
-                        // ... (do your job here)
-                    } else {
-                        // Process form file field (input type="file").
-                        String fieldname = item.getFieldName();
-                        String filename = FilenameUtils.getName(item.getName());
-                        InputStream filecontent = item.getInputStream();
-                        // ... (do your job here)
-                    }
-                }
-            } catch (FileUploadException e) {
-                throw new ServletException("Cannot parse multipart request.", e);
-            }
-            
-          /*ImageBean imagen = new ImageBean();
-            UsuarioDao usuarioDao = new UsuarioDao();
-            byte[] bytes;
-            if (!file.isEmpty()) {
-                try {
-                    bytes = file.getBytes();
-                } catch (IOException ex) {
-                    Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+        public String modificarImagen(@RequestParam("file") MultipartFile file, HttpServletRequest request ) throws Exception {
 
-            if (usuarioDao.modificarImagen(imagen, file)) {
-                return "redirect:/usuario/perfil";
-            }
-            return "redirect:/usuario/imagen";*/
-            return "redirect:/usuario/perfil";
-
+           UsuarioLogic imagenUsuario = new UsuarioLogic();
+           
+           imagenUsuario.cargarImagenPost(file, request);
+		
+           return "redirect:/usuario/perfil";
     }
         
         
@@ -133,7 +97,7 @@ public class UsuarioController {
                UsuarioDao usuarioDao = new UsuarioDao();
                if(usuarioDao.iniciarSesion(usuario,request)){
                   
-                   return "redirect:/timeline";
+                   return "redirect:/home";
                }
                else{
                    return "redirect:/";

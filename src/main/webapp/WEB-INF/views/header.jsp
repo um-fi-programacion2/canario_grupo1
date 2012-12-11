@@ -9,6 +9,8 @@
   <head>
     <meta charset="utf-8">
     <title>Proyecto CANARIO</title>
+    <meta HTTP-EQUIV=”Pragma” CONTENT=”no-cache”>
+    <meta HTTP-EQUIV=”Expires” CONTENT=”-1″>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="La red social de 140 caracteres">
     <meta name="author" content="Grupo1 UNIVERSIDAD DE MENDOZA">

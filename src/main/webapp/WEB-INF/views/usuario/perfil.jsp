@@ -1,9 +1,7 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@page pageEncoding="UTF-8"%>
-<%@ page session="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
 <jsp:include page="../header.jsp" />
 
 
@@ -92,7 +90,9 @@
         
        </div>
         <div class="span4">
-         <br><img src="<c:url value="/resources/img/logor.png" />"  width="286" height="310">        </div>
+            <br><img  style="width: 180px;" class="img-polaroid" src="${pageContext.request.contextPath}/resources/img/usuarios/<%= session.getAttribute("imagen") %>"  width="286" height="310">       
+            <br><a href="${pageContext.request.contextPath}/usuario/perfil/imagen">Cambiar foto de perfil</a>
+        </div>
       </div>
       
       </div>
