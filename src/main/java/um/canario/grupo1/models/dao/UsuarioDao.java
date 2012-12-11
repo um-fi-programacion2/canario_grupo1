@@ -12,8 +12,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import um.canario.grupo1.models.beans.UsuarioBean;
-//import um.canario.grupo1.models.beans.ImageBean;
+import um.canario.grupo1.models.beans.ImageBean;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.web.multipart.MultipartFile;
 import um.canario.grupo1.utils.HibernateUtil;
 
 public class UsuarioDao extends HibernateDaoSupport  {
@@ -121,4 +122,13 @@ public class UsuarioDao extends HibernateDaoSupport  {
                     return false;
                 }
     }
+    
+        public boolean modificarImagen(ImageBean imagen, MultipartFile file) {
+           
+                    
+                    return true;
+
+ 
+    }
+    
 }

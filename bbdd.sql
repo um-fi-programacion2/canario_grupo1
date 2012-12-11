@@ -82,7 +82,9 @@ DROP TABLE IF EXISTS `tweets`;
 CREATE TABLE `tweets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tweet` varchar(140) NOT NULL,
-  PRIMARY KEY (`id`)
+  `id_usuario` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_usuario` (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -108,7 +110,7 @@ CREATE TABLE `usuarios` (
   `biografia` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `usuarios`
@@ -116,9 +118,8 @@ CREATE TABLE `usuarios` (
 
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`id`,`nombre`,`email`,`imagen`,`password`,`localidad`,`biografia`) VALUES 
- (25,'qq','borja@cibeles.net','user.png','1983657','Carrodilla','qq'),
- (26,'666','borja@cibeles.net','user.png','1983657','Carrodilla','666'),
- (27,'666','borja@cibeles.net555','user.png','','Carrodilla','666');
+ (32,'borjaabad','borja@cibeles.net','borja.jpg','1983657','Mayor Drummond','Esto es mi biografia, mas tarde la edito....'),
+ (33,'eduardotomassi','eduardo@asd.asd','user.png','asd','Maipu','Pruebaaaaaaa');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 
 
