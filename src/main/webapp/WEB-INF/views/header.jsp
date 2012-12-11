@@ -59,11 +59,21 @@
               <li><a href="${pageContext.request.contextPath}/timeline">Timeline</a></li>
               <li><a href="#about">Quiénes somos</a></li>
             </ul>
-                <div style="float: right; text-align: right; display: inline-block; padding-top: 10px; color: #FFF; padding-right: 15px">
-                    <a href="${pageContext.request.contextPath}/usuario/perfil" style="color:#FFF;"> <%= session.getAttribute("email") %></a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  
-                    <a href="${pageContext.request.contextPath}/usuario/cerrarSesion" style=" font-weight: bold;">Cerrar sesión</a>
+                <div style="float: right; display: inline-block; padding-top: 10px; color: #FFF; padding-right: 5px">
+                    <a href="${pageContext.request.contextPath}/usuario/perfil" style="color:#FFF;"></a>
+
+                        
+                    <div class="btn-group" style="margin-top: -3px;">
+                          <a class="btn btn-primary" href="${pageContext.request.contextPath}/usuario/perfil"><i class="icon-user icon-white"></i> <%= session.getAttribute("email") %></a>
+                          <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="${pageContext.request.contextPath}/usuario/perfil/modificar/imagen"><i class="icon-picture"></i> Cambiar imagen de perfil</a></li>
+                            <li><a href="#"><i class="icon-bell"></i> Configurar notificaciones</a></li>
+                            <li><a href="#"><i class="icon-eye-open"></i> Ver mi página de usuario pública</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/usuario/cerrarSesion"><i class="icon-off"></i> Cerrar sesión</a></li>
+                          </ul>
+                        </div>
                 </div> 
              
 <!-- 

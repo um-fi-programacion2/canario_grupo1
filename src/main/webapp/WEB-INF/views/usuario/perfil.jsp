@@ -23,7 +23,13 @@
 				<p>
 					<form:label for="nombre" path="nombre"  cssErrorClass="error">Nombre de usuario:</form:label>
                                 
-                                    @<form:input path="nombre" style="width:350px" />				
+                                          <div class="controls">
+                                            <div class="input-prepend">
+                                              <span class="add-on">@</span>
+                                              <form:input path="nombre" style="width:200px" cssClass="span2"  id="inputIcon"/>                                            
+                                            </div>
+                                          </div>
+                                				
 				</p>
 				<p>
 					<form:label for="email" path="email" cssErrorClass="error">E-mail </form:label>
