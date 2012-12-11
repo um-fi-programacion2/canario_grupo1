@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import um.canario.grupo1.models.beans.UsuariosBean;
+//import um.canario.grupo1.models.beans.ImageBean;
 import um.canario.grupo1.models.dao.UsuariosDao;
 
 
@@ -39,10 +40,24 @@ public class UsuarioController {
         }
 
         @RequestMapping(value="/perfil" , method=RequestMethod.GET)
-        public String perfil(Model model) {                  
-             model.addAttribute("usuario", new UsuariosBean());
+        public String perfil(Model model,  HttpServletRequest request) { 
+            
+             model.addAttribute("usuario", (UsuariosBean) request.getSession().getAttribute("usuario"));
              return "usuario/perfil";
         }
+        
+        @RequestMapping(value="/perfil/modificar" , method=RequestMethod.POST)
+        public String modificarPerfil(@ModelAttribute("usuario") UsuariosBean usuario, HttpServletRequest request) {                  
+             UsuariosDao usuarioDao = new UsuariosDao();    
+             request.getSession().setAttribute("usuario", usuario);
+               if(usuarioDao.modificarPerfil(usuario, request)){
+                   return "redirect:/usuario/perfil";
+               }
+               else{
+                   return "redirect:/usuario/perfil";
+               }
+        }
+        
         
         @RequestMapping(value="/cerrarSesion" , method=RequestMethod.GET)
         public String cerrarSession(Model model, HttpServletRequest request) {                  

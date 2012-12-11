@@ -21,11 +21,12 @@
 				<legend>Formulario de registro</legend>
                                                                              <form:hidden path="id" />
 				<p>
-					<form:label for="nombre" path="nombre"  cssErrorClass="error">Nombre completo</form:label>
-                                        <form:input path="nombre" style="width:350px" />			
+					<form:label for="nombre" path="nombre"  cssErrorClass="error">Nombre de usuario:</form:label>
+                                
+                                    @<form:input path="nombre" style="width:350px" />				
 				</p>
 				<p>
-					<form:label for="email" path="email" cssErrorClass="error">E-mail (nombre de usuario)</form:label>
+					<form:label for="email" path="email" cssErrorClass="error">E-mail </form:label>
 					<form:input path="email"  style="width:350px"/>			
 				</p>
                                 <p>

@@ -20,6 +20,11 @@
       body {
         padding-top: 60px;
         padding-bottom: 40px;
+         background-image: url("<c:url value="/resources/img/bg.png" />");
+         background-position: left 40px;
+         background-attachment: fixed;
+         background-repeat: no-repeat;
+         background-color: #C0DEED;
       }
     </style>
     <link href="<c:url value="/resources/css/bootstrap-responsive.css" />" rel="stylesheet">
@@ -89,11 +94,13 @@
 				<legend>Formulario de registro</legend>
                                                                              <form:hidden path="id" />
 				<p>
-					<form:label for="nombre" path="nombre"  cssErrorClass="error">Nombre completo</form:label>
-                                        <form:input path="nombre" style="width:350px" />			
+					<form:label for="nombre" path="nombre"  cssErrorClass="error">Nombre de usuario:</form:label>
+                                
+                                    @<form:input path="nombre" style="width:350px" />			
 				</p>
+                                
 				<p>
-					<form:label for="email" path="email" cssErrorClass="error">E-mail (nombre de usuario)</form:label>
+					<form:label for="email" path="email" cssErrorClass="error">E-mail</form:label>
 					<form:input path="email"  style="width:350px"/>			
 				</p>
                                 <p>

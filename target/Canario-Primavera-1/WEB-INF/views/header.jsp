@@ -20,8 +20,16 @@
       body {
         padding-top: 60px;
         padding-bottom: 40px;
+         background-image: url("<c:url value="/resources/img/bg.png" />");
+         background-position: left 40px;
+         background-attachment: fixed;
+         background-repeat: no-repeat;
+         background-color: #C0DEED;
       }
     </style>
+
+    
+    
     <link href="<c:url value="/resources/css/bootstrap-responsive.css" />" rel="stylesheet">
     <link rel="shortcut icon" href="<c:url value="/img/resources/favicon.ico" />" type="image/x-icon" />
     <link rel="icon" href="<c:url value="/resources/img/favicon.ico" />" type="image/x-icon" />
@@ -44,18 +52,18 @@
             <span class="icon-bar"></span>
           </a>
           
-            <a class="brand" href="#"><img src="<c:url value="/resources/img/logo.png" />" width="20"> Proyecto CANARIO</a>
+            <a class="brand" href="#"><img src="${pageContext.request.contextPath}/resources/img/logo.png" width="20"> Proyecto CANARIO</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="<c:url value="/usuario/home" />">Home</a></li>
-              <li><a href="<c:url value="/timeline" />">Timeline</a></li>
+              <li class="active"><a href="${pageContext.request.contextPath}/usuario/home">Home</a></li>
+              <li><a href="${pageContext.request.contextPath}/timeline">Timeline</a></li>
               <li><a href="#about">Quiénes somos</a></li>
             </ul>
                 <div style="float: right; text-align: right; display: inline-block; padding-top: 10px; color: #FFF; padding-right: 15px">
-                    <a href="<c:url value="/Canario-Primavera-1/usuario/perfil" />" style="color:#FFF;"> <%= session.getAttribute("email") %></a>
+                    <a href="${pageContext.request.contextPath}/usuario/perfil" style="color:#FFF;"> <%= session.getAttribute("email") %></a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    
-                    <a href="<fmt:message key="url.app"/>usuario/cerrarSesion" style=" font-weight: bold;">Cerrar sesión</a>
+                  
+                    <a href="${pageContext.request.contextPath}/usuario/cerrarSesion" style=" font-weight: bold;">Cerrar sesión</a>
                 </div> 
              
 <!-- 
