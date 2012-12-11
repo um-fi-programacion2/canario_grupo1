@@ -10,21 +10,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import um.canario.grupo1.models.beans.UsuariosBean;
+import um.canario.grupo1.models.beans.UsuarioBean;
 //import um.canario.grupo1.models.beans.ImageBean;
-import um.canario.grupo1.models.dao.UsuariosDao;
+import um.canario.grupo1.models.dao.UsuarioDao;
 
 
 @Controller
 @RequestMapping(value="/usuario")
 public class UsuarioController {
 
-	private Map<Long, UsuariosBean> users = new ConcurrentHashMap<Long, UsuariosBean>();
+	private Map<Long, UsuarioBean> users = new ConcurrentHashMap<Long, UsuarioBean>();
         
         @RequestMapping(value="/registrar" , method=RequestMethod.POST)
-        public String registrar(@ModelAttribute("usuario") UsuariosBean usuario, HttpServletRequest request) {
+        public String registrar(@ModelAttribute("usuario") UsuarioBean usuario, HttpServletRequest request) {
                
-             UsuariosDao usuarioDao = new UsuariosDao();               
+             UsuarioDao usuarioDao = new UsuarioDao();               
                if(usuarioDao.registrar(usuario) && usuarioDao.iniciarSesion(usuario, request)){
                    return "redirect:/usuario/home";
                }
@@ -35,20 +35,20 @@ public class UsuarioController {
         
         @RequestMapping(value="/home" , method=RequestMethod.GET)
         public String home(Model model) {                  
-             model.addAttribute("usuario", new UsuariosBean());
+             model.addAttribute("usuario", new UsuarioBean());
              return "usuario/home";
         }
 
         @RequestMapping(value="/perfil" , method=RequestMethod.GET)
         public String perfil(Model model,  HttpServletRequest request) { 
             
-             model.addAttribute("usuario", (UsuariosBean) request.getSession().getAttribute("usuario"));
+             model.addAttribute("usuario", (UsuarioBean) request.getSession().getAttribute("usuario"));
              return "usuario/perfil";
         }
         
         @RequestMapping(value="/perfil/modificar" , method=RequestMethod.POST)
-        public String modificarPerfil(@ModelAttribute("usuario") UsuariosBean usuario, HttpServletRequest request) {                  
-             UsuariosDao usuarioDao = new UsuariosDao();    
+        public String modificarPerfil(@ModelAttribute("usuario") UsuarioBean usuario, HttpServletRequest request) {                  
+             UsuarioDao usuarioDao = new UsuarioDao();    
              request.getSession().setAttribute("usuario", usuario);
                if(usuarioDao.modificarPerfil(usuario, request)){
                    return "redirect:/usuario/perfil";
@@ -61,21 +61,21 @@ public class UsuarioController {
         
         @RequestMapping(value="/cerrarSesion" , method=RequestMethod.GET)
         public String cerrarSession(Model model, HttpServletRequest request) {                  
-             UsuariosDao usuarioDao = new UsuariosDao();
+             UsuarioDao usuarioDao = new UsuarioDao();
              usuarioDao.cerrarSesion(request);
-             model.addAttribute("usuario", new UsuariosBean());
+             model.addAttribute("usuario", new UsuarioBean());
              return "redirect:/";
         }
         
        @RequestMapping(value="/registrar" , method=RequestMethod.GET)
         public String registrar2(Model model) {                  
-             model.addAttribute("usuario", new UsuariosBean());
+             model.addAttribute("usuario", new UsuarioBean());
              return "usuario/formularioRegistro";
         }
         
         @RequestMapping(value="/iniciarSesion" , method=RequestMethod.POST)
-        public String iniciarSesion(@ModelAttribute("usuario") UsuariosBean usuario, HttpServletRequest request) {
-               UsuariosDao usuarioDao = new UsuariosDao();
+        public String iniciarSesion(@ModelAttribute("usuario") UsuarioBean usuario, HttpServletRequest request) {
+               UsuarioDao usuarioDao = new UsuarioDao();
                if(usuarioDao.iniciarSesion(usuario,request)){
                   
                    return "redirect:/timeline";

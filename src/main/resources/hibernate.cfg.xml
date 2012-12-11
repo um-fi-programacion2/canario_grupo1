@@ -10,5 +10,6 @@
     <property name="show_sql">true</property>
     <property name="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</property>
     <mapping resource="um/canario/grupo1/models/beans/Usuarios.hbm.xml"/>
+    <mapping resource="um/canario/grupo1/models/beans/Tweets.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

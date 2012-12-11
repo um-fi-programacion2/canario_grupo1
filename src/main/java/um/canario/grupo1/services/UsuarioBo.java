@@ -4,7 +4,7 @@
  */
 package um.canario.grupo1.services;
 
-import um.canario.grupo1.models.beans.UsuariosBean;
+import um.canario.grupo1.models.beans.UsuarioBean;
 
 /**
  *

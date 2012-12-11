@@ -52,22 +52,33 @@
             <span class="icon-bar"></span>
           </a>
           
-            <a class="brand" href="#"><img src="${pageContext.request.contextPath}/resources/img/logo.png" width="20"> Proyecto CANARIO</a>
+            <a class="brand" href="${pageContext.request.contextPath}/timeline"><img src="${pageContext.request.contextPath}/resources/img/logo.png" width="20"> Proyecto CANARIO</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="${pageContext.request.contextPath}/usuario/home">Home</a></li>
-              <li><a href="${pageContext.request.contextPath}/timeline">Timeline</a></li>
-              <li><a href="#about">Quiénes somos</a></li>
+               <li><a href="${pageContext.request.contextPath}/usuario/home"><i class="icon-home icon-white"></i> Home</a></li>
+              <li><a href="${pageContext.request.contextPath}/timeline"><i class="icon-indent-left icon-white"></i> Timeline</a></li>
+              <li><a href="${pageContext.request.contextPath}/tweet/nuevo"><i class="icon-edit icon-white"></i> Nuevo tweet</a></li>
             </ul>
-                <div style="float: right; display: inline-block; padding-top: 10px; color: #FFF; padding-right: 5px">
+                <div style="float: right; display: inline-block; padding-top: 10px; color: #FFF;">
                     <a href="${pageContext.request.contextPath}/usuario/perfil" style="color:#FFF;"></a>
 
                         
                     <div class="btn-group" style="margin-top: -3px;">
-                          <a class="btn btn-primary" href="${pageContext.request.contextPath}/usuario/perfil"><i class="icon-user icon-white"></i> <%= session.getAttribute("email") %></a>
+                          <a class="btn btn-primary" href="${pageContext.request.contextPath}/usuario/perfil">
+                              <i class="icon-user icon-white"></i> 
+                              <%= session.getAttribute("email") %>
+                          </a>
                           <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
                           <ul class="dropdown-menu">
-                            <li><a href="${pageContext.request.contextPath}/usuario/perfil/modificar/imagen"><i class="icon-picture"></i> Cambiar imagen de perfil</a></li>
+                              <li>
+                                  <a href="${pageContext.request.contextPath}/usuario/perfil">
+                                       <img src="${pageContext.request.contextPath}/resources/img/usuarios/<%= session.getAttribute("imagen") %>" class="img-circle" width="30" > 
+                                       <span style="font-weight: bold">
+                                           <%= session.getAttribute("nombre") %>
+                                       </span>
+                               </li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/usuario/perfil/modificar/imagen" > <i class="icon-picture"></i> Cambiar imagen de perfil</a></li>
                             <li><a href="#"><i class="icon-bell"></i> Configurar notificaciones</a></li>
                             <li><a href="#"><i class="icon-eye-open"></i> Ver mi página de usuario pública</a></li>
                             <li class="divider"></li>
@@ -75,7 +86,7 @@
                           </ul>
                         </div>
                 </div> 
-             
+                            
 <!-- 
             <form class="navbar-form pull-right">
               <input class="span2" type="text" placeholder="Email">

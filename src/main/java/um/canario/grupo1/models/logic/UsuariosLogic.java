@@ -1,18 +1,18 @@
 package um.canario.grupo1.models.logic;
 
-import um.canario.grupo1.models.beans.UsuariosBean;
-import um.canario.grupo1.models.dao.UsuariosDao;
+import um.canario.grupo1.models.beans.UsuarioBean;
+import um.canario.grupo1.models.dao.UsuarioDao;
 
 
 public class UsuariosLogic {
     
-        UsuariosDao usuarioDao;
+        UsuarioDao usuarioDao;
  
-	public void setStockDao(UsuariosDao usuarioDao) {
+	public void setStockDao(UsuarioDao usuarioDao) {
 		this.usuarioDao = usuarioDao;
 	}
 
-	public void save(UsuariosBean usuarioBean){
+	public void save(UsuarioBean usuarioBean){
 	//	usuarioDao.save(usuarioBean);
 	}
 /* 
