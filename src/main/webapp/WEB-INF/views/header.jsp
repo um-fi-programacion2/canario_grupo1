@@ -40,7 +40,17 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script>
+    function cargar(div, desde)
+    {
+         $(div).load(desde);
+         loading = $("#cargando");
+         loading.show(100);
+         loading.delay(500);
+         loading.hide(100);
+    }
+    </script>
   </head>
 
   <body>
@@ -60,6 +70,7 @@
                <li><a href="${pageContext.request.contextPath}/usuario/home"><i class="icon-home icon-white"></i> Home</a></li>
               <li><a href="${pageContext.request.contextPath}/timeline"><i class="icon-indent-left icon-white"></i> Timeline</a></li>
               <li><a href="${pageContext.request.contextPath}/tweet/nuevo"><i class="icon-edit icon-white"></i> Nuevo tweet</a></li>
+              <li><div id="cargando" style="display:none;"><img src="${pageContext.request.contextPath}/resources/img/baile.gif" style="width: 33px; padding-left: 50px; padding-top:5px; " /></div></li>
             </ul>
                 <div style="float: right; display: inline-block; padding-top: 10px; color: #FFF;">
                     <a href="${pageContext.request.contextPath}/usuario/perfil" style="color:#FFF;"></a>
@@ -77,7 +88,7 @@
                                        <img src="${pageContext.request.contextPath}/resources/img/usuarios/<%= session.getAttribute("imagen") %>" class="img-circle" width="30" > 
                                        <span style="font-weight: bold">
                                            <%= session.getAttribute("nombre") %>
-                                       </span>
+                                       </span></a>
                                </li>
                             <li class="divider"></li>
                             <li><a href="${pageContext.request.contextPath}/usuario/perfil/imagen" > <i class="icon-picture"></i> Cambiar imagen de perfil</a></li>

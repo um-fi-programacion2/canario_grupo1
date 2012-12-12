@@ -15,6 +15,7 @@ public class TweetBean  implements java.io.Serializable {
 
     public TweetBean() {
     }
+    
 
     public TweetBean(String tweet, int idUsuario) {
        this.tweet = tweet;

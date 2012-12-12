@@ -67,7 +67,7 @@ public class UsuarioDao extends HibernateDaoSupport  {
                 request.getSession().setAttribute("nombre", usuario.getNombre());
                 request.getSession().setAttribute( "email", usuario.getEmail() );
                 request.getSession().setAttribute( "imagen", usuario.getImagen() );
-                request.getSession().setAttribute( "id", usuario.getId() );
+                request.getSession().setAttribute( "id",(Number) usuario.getId() );
                 
                  
                 return true;

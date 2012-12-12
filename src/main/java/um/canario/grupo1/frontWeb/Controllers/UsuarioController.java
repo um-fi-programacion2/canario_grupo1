@@ -97,7 +97,7 @@ public class UsuarioController {
                UsuarioDao usuarioDao = new UsuarioDao();
                if(usuarioDao.iniciarSesion(usuario,request)){
                   
-                   return "redirect:/home";
+                   return "redirect:/usuario/home";
                }
                else{
                    return "redirect:/";
