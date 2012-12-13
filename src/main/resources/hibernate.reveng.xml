@@ -4,4 +4,5 @@
   <schema-selection match-catalog="canario"/>
   <table-filter match-name="usuarios"/>
   <table-filter match-name="tweets"/>
+  <table-filter match-name="relaciones"/>
 </hibernate-reverse-engineering>

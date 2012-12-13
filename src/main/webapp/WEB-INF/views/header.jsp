@@ -43,12 +43,17 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     <script>
     function cargar(div, desde)
-    {
-         $(div).load(desde);
-         loading = $("#cargando");
-         loading.show(100);
-         loading.delay(500);
-         loading.hide(100);
+    {   
+         $(div).html("");
+         $(div).hide(100);
+         $(div).delay(500);
+         
+         $("#cargando").show();
+         $("#cargando").delay(500);
+         $("#cargando").hide(1);
+          $(div).show(200);
+          $(div).load(desde);
+
     }
     </script>
   </head>
@@ -64,15 +69,18 @@
             <span class="icon-bar"></span>
           </a>
           
-            <a class="brand" href="${pageContext.request.contextPath}/timeline"><img src="${pageContext.request.contextPath}/resources/img/logo.png" width="20"> Proyecto CANARIO</a>
+            <a class="brand" href="${pageContext.request.contextPath}/timeline"><img src="${pageContext.request.contextPath}/resources/img/logo.png" width="20"> CANARIO</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-               <li><a href="${pageContext.request.contextPath}/usuario/home"><i class="icon-home icon-white"></i> Home</a></li>
+               <li><a href="${pageContext.request.contextPath}/usuario/<%= session.getAttribute("nombre") %>"><i class="icon-home icon-white"></i> Home</a></li>
               <li><a href="${pageContext.request.contextPath}/timeline"><i class="icon-indent-left icon-white"></i> Timeline</a></li>
               <li><a href="${pageContext.request.contextPath}/tweet/nuevo"><i class="icon-edit icon-white"></i> Nuevo tweet</a></li>
               <li><div id="cargando" style="display:none;"><img src="${pageContext.request.contextPath}/resources/img/baile.gif" style="width: 33px; padding-left: 50px; padding-top:5px; " /></div></li>
             </ul>
-                <div style="float: right; display: inline-block; padding-top: 10px; color: #FFF;">
+            <div>
+                
+                
+                 <div style="float:right; padding-top:9px; color: #FFF; ">
                     <a href="${pageContext.request.contextPath}/usuario/perfil" style="color:#FFF;"></a>
 
                         
@@ -99,6 +107,25 @@
                           </ul>
                         </div>
                 </div> 
+            
+            
+            
+            <div style="float: right; height: 20px; margin-right: 20px; ">
+                
+                <form class="form-search" action="${pageContext.request.contextPath}/usuario/busqueda" method="POST">
+                    <input name="busqueda" type="text" class="input-medium search-query" style="margin-top: 7px">
+                    <input type="submit" class="btn btn-inverse" value="Buscar"/>
+                </form>
+                  </div>
+                
+                
+                
+                
+            </div>
+            
+            
+          
+                
                             
 <!-- 
             <form class="navbar-form pull-right">

@@ -2,6 +2,7 @@ package um.canario.grupo1.models.dao;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.hibernate.Query;
@@ -14,6 +15,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import um.canario.grupo1.models.beans.TweetBean;
+import um.canario.grupo1.models.beans.UsuarioBean;
 import um.canario.grupo1.utils.HibernateUtil;
 
 public class TweetDao extends HibernateDaoSupport{
@@ -40,22 +42,17 @@ public class TweetDao extends HibernateDaoSupport{
     }
      
     
-    public List<TweetBean> mostrarTweetsPropios(HttpServletRequest request){
+    public List<TweetBean> getTweets(String Usuario){
      try {
+                        UsuarioDao usuarioDao = new UsuarioDao();
 			SessionFactory sf = HibernateUtil.getSessionFactory();
                         Transaction t = null;
                         Session s = sf.openSession();
 			t = s.beginTransaction(); // start a new transaction
-                        
-			 Query query = s.createQuery("FROM TweetBean tweet where tweet.idUsuario = :idu");
-                           
-                         query.setParameter("idu", request.getSession().getAttribute("id"));            
-                         
+			 Query query = s.createQuery("FROM TweetBean tweet where tweet.idUsuario = :id order by tweet.fecha desc");
+                         query.setParameter("id", usuarioDao.getUsuario(Usuario).getId());            
+                         t.commit();
                          return (List<TweetBean>) query.list();
-
-		
-		 	
-
 		
 		} catch (Exception ex) {
 			System.err.println("Error !-->" + ex.getMessage());

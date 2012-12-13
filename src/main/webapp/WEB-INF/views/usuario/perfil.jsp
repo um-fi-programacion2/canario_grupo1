@@ -12,7 +12,7 @@
 
         <h1>Modificar perfil</h1>
       <div class="row">
-        <div class="span6"> 
+        <div class="span6" > 
             
 		<form:form modelAttribute="usuario" action="${pageContext.request.contextPath}/usuario/perfil/modificar" method="post">
 		  	<fieldset>		
@@ -24,7 +24,7 @@
                                           <div class="controls">
                                             <div class="input-prepend">
                                               <span class="add-on">@</span>
-                                              <form:input path="nombre" style="width:200px" cssClass="span2"  id="inputIcon"/>                                            
+                                              <form:input path="nombre" OnFocus="this.blur()"  style="width:200px" cssClass="span2"  id="inputIcon" cssStyle="background-color: #e1e1e8;"/>                                            
                                             </div>
                                           </div>
                                 				
@@ -35,7 +35,7 @@
 				</p>
                                 <p>
                                         <form:label for="password" path="password" cssErrorClass="error">Contraseña</form:label>
-    					<form:password path="password"  style="width:350px"/>			
+    					<form:password path="password"  style="width:350px;" />			
 				</p>
                                 <p>
                                    <form:label for="localidad" path="localidad" cssErrorClass="error" style="width:350px">Localidad</form:label>

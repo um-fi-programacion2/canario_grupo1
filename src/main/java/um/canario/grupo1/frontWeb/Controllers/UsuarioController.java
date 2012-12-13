@@ -1,17 +1,25 @@
 package um.canario.grupo1.frontWeb.Controllers;
 
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import um.canario.grupo1.models.beans.TweetBean;
 import um.canario.grupo1.models.beans.UsuarioBean;
+import um.canario.grupo1.models.dao.TweetDao;
 import um.canario.grupo1.models.dao.UsuarioDao;
 import um.canario.grupo1.models.logic.UsuarioLogic;
 
@@ -27,17 +35,29 @@ public class UsuarioController {
                
              UsuarioDao usuarioDao = new UsuarioDao();               
                if(usuarioDao.registrar(usuario) && usuarioDao.iniciarSesion(usuario, request)){
-                   return "redirect:/usuario/home";
+                   return "redirect:/usuario/" + request.getSession().getAttribute("nombre");
                }
                else{
                    return "redirect:/index";
                }
         }   
         
-        @RequestMapping(value="/home" , method=RequestMethod.GET)
-        public String home(Model model) {                  
-             model.addAttribute("usuario", new UsuarioBean());
-             return "usuario/home";
+        @RequestMapping(value="/{nombreDeUsuario}" , method=RequestMethod.GET)
+        public String home(@PathVariable String nombreDeUsuario, Model model, ModelAndView mav, UsuarioDao usuarioDao, TweetDao tweetDao) {    
+            //mav.addObject("following", usuarioDao.getFollowing(nombreDeUsuario));
+            //mav.addObject("followers", usuarioDao.getFollowers(nombreDeUsuario));
+            //mav.addObject("mentions", tweetDao.getMentions(nombreDeUsuario"));
+            
+            model.addAttribute("tweets", tweetDao.getTweets(nombreDeUsuario));
+            model.addAttribute("usuario", usuarioDao.getUsuario(nombreDeUsuario));
+            
+            mav.setViewName("usuario/home");
+            
+            //mav.
+            
+            return "usuario/home";
+            
+            // return mav;
         }
 
         
@@ -58,8 +78,7 @@ public class UsuarioController {
                return "redirect:/usuario/perfil";
 
         }
-        
-        
+           
         
         @RequestMapping(value="/perfil/imagen" , method=RequestMethod.GET)
         public String imagen() { 
@@ -76,6 +95,16 @@ public class UsuarioController {
 		
            return "redirect:/usuario/perfil";
     }
+        
+        @RequestMapping(value = "/busqueda", method=RequestMethod.POST)
+        public String buscarUsuario(@RequestParam("busqueda")String busqueda, Model model, UsuarioDao usuarioDao) {
+            
+            System.err.println("BUSQUEDAA:" + busqueda);
+                
+            model.addAttribute("usuarios", usuarioDao.getUsuarios(busqueda));
+
+            return "usuario/busqueda";
+        }
         
         
         @RequestMapping(value="/cerrarSesion" , method=RequestMethod.GET)
@@ -97,7 +126,7 @@ public class UsuarioController {
                UsuarioDao usuarioDao = new UsuarioDao();
                if(usuarioDao.iniciarSesion(usuario,request)){
                   
-                   return "redirect:/usuario/home";
+                   return "redirect:/usuario/" + request.getSession().getAttribute("nombre");
                }
                else{
                    return "redirect:/";

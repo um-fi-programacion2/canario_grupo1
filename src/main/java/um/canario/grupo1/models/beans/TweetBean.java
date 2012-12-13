@@ -1,6 +1,9 @@
 package um.canario.grupo1.models.beans;
 // Generated 11-dic-2012 0:53:23 by Hibernate Tools 3.2.1.GA
 
+import java.util.Date;
+
+
 
 
 /**
@@ -12,6 +15,7 @@ public class TweetBean  implements java.io.Serializable {
      private Integer id;
      private String tweet;
      private int idUsuario;
+     private Date fecha;
 
     public TweetBean() {
     }
@@ -43,7 +47,13 @@ public class TweetBean  implements java.io.Serializable {
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
-
+    public Date getFecha() {
+        return this.fecha;
+    }
+    
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
 
 
 

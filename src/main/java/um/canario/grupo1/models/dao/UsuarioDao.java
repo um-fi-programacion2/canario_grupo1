@@ -1,5 +1,6 @@
 package um.canario.grupo1.models.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.hibernate.Query;
@@ -25,6 +26,9 @@ public class UsuarioDao extends HibernateDaoSupport  {
                 //Query query = session.createQuery("FROM UsuariosBean t where t.id=1");
                 
                 t = session.beginTransaction();
+                usuario.setNombre(usuario.getNombre().toLowerCase());
+                usuario.setEmail(usuario.getEmail().toLowerCase());
+                
                 session.persist(usuario);
                 t.commit();
                 
@@ -74,6 +78,52 @@ public class UsuarioDao extends HibernateDaoSupport  {
             }
     }
     
+public UsuarioBean getUsuario(String nombreUsuario){
+        
+       UsuarioBean usuarioBean = new UsuarioBean();       
+       SessionFactory sf = HibernateUtil.getSessionFactory();
+       
+       
+       Session s = sf.openSession();
+	
+       Query query = s.createQuery("FROM UsuarioBean u where u.nombre = :nombre");
+       query.setParameter("nombre", nombreUsuario);
+
+       try {
+          usuarioBean = (UsuarioBean) query.list().get(0);
+        } catch (Exception e) {
+          System.err.println("ErrorHIBERNATE !-->" + e);
+        }
+       s.close();
+       
+                return usuarioBean;
+}
+    
+
+
+public List<UsuarioBean> getUsuarios(String busqueda){
+        
+       List<UsuarioBean> usuarios = new ArrayList<UsuarioBean>();
+       
+       SessionFactory sf = HibernateUtil.getSessionFactory();
+       Session s = sf.openSession();
+	
+       busqueda = "%" + busqueda.toLowerCase() + "%"; 
+       
+       Query query = s.createQuery("FROM UsuarioBean u where u.nombre LIKE '" + busqueda + "'");
+
+       try {
+          usuarios = (List<UsuarioBean>) query.list();
+        } catch (Exception e) {
+          System.err.println("ErrorHIBERNATE !-->" + e);
+        }
+       s.close();
+       
+                return usuarios;
+}
+
+
+
     public boolean cerrarSesion(HttpServletRequest request){
         
             request.getSession().removeAttribute( "email");
@@ -92,8 +142,8 @@ public class UsuarioDao extends HibernateDaoSupport  {
                     t = session.beginTransaction();
                     Query query = session.createQuery("update UsuarioBean u set u.nombre = :nombre, u.email = :email, u.password = :password, u.localidad = :localidad, u.biografia = :biografia " 
                             + " where u.id = :id");
-                    query.setParameter("nombre", usuario.getNombre());
-                    query.setParameter("email", usuario.getEmail());
+                    query.setParameter("nombre", usuario.getNombre().toLowerCase());
+                    query.setParameter("email", usuario.getEmail().toLowerCase());
                     //query.setParameter("imagen", usuario.getImagen());
                     query.setParameter("password", usuario.getPassword());
                     query.setParameter("localidad", usuario.getLocalidad());
@@ -135,4 +185,7 @@ public class UsuarioDao extends HibernateDaoSupport  {
         
         
     }
+    
+    
+   
 }

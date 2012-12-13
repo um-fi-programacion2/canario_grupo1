@@ -4,13 +4,13 @@
 <jsp:include page="../header.jsp" />
 
 
-  <div class="container-fluid">
+<div class="container-fluid" >
       <div class="row-fluid">
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Tweets publicados por mi</li>
-              <li><a href="#" onclick="cargar('#cuerpo','http://localhost:8080/Canario-Primavera-1/tweet/tweets')">Tweets</a></li>
+              <li class="nav-header">Tweets publicados</li>
+              <li><a href="" onclick="cargar('#cuerpo','http://localhost:8080/Canario-Primavera-1/tweet/${usuario.nombre}')">Tweets</a></li>
               <li class="nav-header">Personas a las que sigo</li>
               <li><a href="#">Following</a></li>
               <li class="nav-header">Personas que me siguen</li>
@@ -34,11 +34,11 @@
   <tr>
     <td rowspan="4" valign="top" style=" white-space: nowrap; width: 1px;">
         <a href="${pageContext.request.contextPath}/usuario/perfil">
-            <img src="${pageContext.request.contextPath}/resources/img/usuarios/<%= session.getAttribute("imagen") %>" class="img-rounded" width="140" style="margin-right: 15px;" > 
+            <img src="${pageContext.request.contextPath}/resources/img/usuarios/${usuario.imagen}" class="img-rounded" width="140" style="margin-right: 15px;" > 
         </a>
     </td>
     <td><a href="${pageContext.request.contextPath}/usuario/perfil">
-            <h3 style="margin-top: 0px; padding-top: 0px">@ <%= session.getAttribute("nombre") %> </h3></td>
+            <h3 style="margin-top: 0px; padding-top: 0px">@ ${usuario.nombre}</h3></td>
         </a>
     <td>&nbsp;</td>
   </tr>
@@ -72,12 +72,13 @@
   </tr>
 </table>
 </div>
+          
           <div class="row-fluid">
-              <div class="well" id="cuerpo" style="background-color: #f7f7f7">asdasd</div>
+              <div class="well" id="cuerpo" style="background-color: #fff; display: none;"></div>
           </div><!--/row-->
         </div><!--/span-->
       </div><!--/row-->
 
-        
+        <script type="text/javascript"> cargar('#cuerpo','http://localhost:8080/Canario-Primavera-1/tweet/${usuario.nombre}');</script>
 
 <jsp:include page="../footer.jsp" />
