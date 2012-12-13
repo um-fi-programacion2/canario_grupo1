@@ -98,9 +98,7 @@ public class UsuarioController {
         
         @RequestMapping(value = "/busqueda", method=RequestMethod.POST)
         public String buscarUsuario(@RequestParam("busqueda")String busqueda, Model model, UsuarioDao usuarioDao) {
-            
-            System.err.println("BUSQUEDAA:" + busqueda);
-                
+                            
             model.addAttribute("usuarios", usuarioDao.getUsuarios(busqueda));
 
             return "usuario/busqueda";

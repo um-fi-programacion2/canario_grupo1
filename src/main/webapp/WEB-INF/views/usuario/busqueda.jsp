@@ -36,7 +36,8 @@
                 
            
                     <div style="padding: 0px; float:left; padding-top: 5px;">
-                        <button class="btn btn-success" type="button" style="margin-right: 25px"><i class="icon-ok icon-white" ></i> Follow</button>
+                        <button id="${usuario.id}follow" onclick="follow('#${usuario.id}','${pageContext.request.contextPath}/follow/${usuario.id}')" class="btn btn-success" type="button" style="margin-right: 25px"><i class="icon-ok icon-white" ></i> Follow</button>
+                        <button id="${usuario.id}unfollow" onclick="unfollow('#${usuario.id}','${pageContext.request.contextPath}/follow/unfollow/${usuario.id}')" class="btn btn-danger" type="button" style="margin-right: 25px; display: none"><i class="icon-remove icon-white" ></i> Unfollow</button>
                         <a href="${pageContext.request.contextPath}/usuario/${usuario.nombre}" style="font-size:x-small">
                             <img src="${pageContext.request.contextPath}/resources/img/usuarios/${usuario.imagen}" class="img-rounded" style="margin-right: 25px;width: 50px;" >
                         </a>

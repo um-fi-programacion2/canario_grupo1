@@ -55,6 +55,20 @@
           $(div).load(desde);
 
     }
+   
+        function follow(div, desde)
+    {   
+          $("#trash").load(desde);
+          $(div + "follow").hide();
+          $(div + "unfollow").show();
+          
+    }
+          function unfollow(div, desde)
+    {   
+          $("#trash").load(desde);
+          $(div + "unfollow").hide();
+          $(div + "follow").show();
+    }
     </script>
   </head>
 
@@ -138,5 +152,5 @@
         </div>
       </div>
     </div>
-
+                    <div id="trash" style="display: none"></div>
     <div class="container">
