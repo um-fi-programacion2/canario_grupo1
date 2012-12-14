@@ -44,26 +44,26 @@
     <script>
     function cargar(div, desde)
     {   
-         $(div).html("");
-         $(div).hide(100);
-         $(div).delay(500);
-         
          $("#cargando").show();
-         $("#cargando").delay(500);
+         $("#cargando").delay(350);
          $("#cargando").hide(1);
+         
+          $(div).empty();
+          $(div).hide(100);
+          $(div).delay(500);
           $(div).show(200);
           $(div).load(desde);
 
     }
    
-        function follow(div, desde)
+        function follow(id, desde)
     {   
           $("#trash").load(desde);
-          $(div + "follow").hide();
-          $(div + "unfollow").show();
+          $(id + "follow").hide();
+          $(id + "unfollow").show();
           
     }
-          function unfollow(div, desde)
+        function unfollow(div, desde)
     {   
           $("#trash").load(desde);
           $(div + "unfollow").hide();

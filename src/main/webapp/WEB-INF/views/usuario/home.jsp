@@ -10,11 +10,11 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Tweets publicados</li>
-              <li><a href="" onclick="cargar('#cuerpo','http://localhost:8080/Canario-Primavera-1/tweet/${usuario.nombre}')">Tweets</a></li>
+              <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/tweet/${usuario.nombre}')">Tweets</a></li>
               <li class="nav-header">Personas a las que sigo</li>
-              <li><a href="#">Following</a></li>
+              <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/follow/following/${usuario.id}')">Following</a></li>
               <li class="nav-header">Personas que me siguen</li>
-              <li><a href="#">Followers</a></li>
+              <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/follow/followers/${usuario.id}')">Followers</a></li>
             </ul>
           </div><!--/.well -->
           <div class="well sidebar-nav">
@@ -78,7 +78,8 @@
           </div><!--/row-->
         </div><!--/span-->
       </div><!--/row-->
-
-        <script type="text/javascript"> cargar('#cuerpo','http://localhost:8080/Canario-Primavera-1/tweet/${usuario.nombre}');</script>
-
+                <script>
+                cargar('#cuerpo','http://localhost:8080/Canario-Primavera-1/tweet/${usuario.nombre}');
+                </script>
+                
 <jsp:include page="../footer.jsp" />

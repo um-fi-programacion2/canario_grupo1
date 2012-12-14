@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import um.canario.grupo1.models.beans.TweetBean;
 import um.canario.grupo1.models.beans.UsuarioBean;
+import um.canario.grupo1.models.dao.FollowDao;
 import um.canario.grupo1.models.dao.TweetDao;
 import um.canario.grupo1.models.dao.UsuarioDao;
 import um.canario.grupo1.models.logic.UsuarioLogic;
@@ -97,10 +98,14 @@ public class UsuarioController {
     }
         
         @RequestMapping(value = "/busqueda", method=RequestMethod.POST)
-        public String buscarUsuario(@RequestParam("busqueda")String busqueda, Model model, UsuarioDao usuarioDao) {
-                            
+        public String buscarUsuario(@RequestParam("busqueda")String busqueda, Model model, FollowDao followDao, UsuarioDao usuarioDao, HttpServletRequest request) {
+            
+            String follower = request.getSession().getAttribute("id").toString();
             model.addAttribute("usuarios", usuarioDao.getUsuarios(busqueda));
-
+            model.addAttribute("relaciones", followDao.getRelaciones(follower));
+            
+            System.err.println("ERRORAass: " + follower);
+            
             return "usuario/busqueda";
         }
         

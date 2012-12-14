@@ -30,12 +30,13 @@ public class TweetDao extends HibernateDaoSupport{
             //Query query = session.createQuery("FROM UsuariosBean t where t.id=1");
             t = session.beginTransaction();
             session.persist(tweetBean);
+            System.err.println("NuevoTWEET" + tweetBean.getTweet());
             t.commit();
-
+            
             return true;
 
         } catch (Exception e) {
-            System.err.println("Error !-->" + e.getMessage());
+            System.err.println("ViejoTWEET" + tweetBean.getTweet());
             return false;
         }
 
