@@ -1,43 +1,41 @@
 package um.canario.grupo1.models.dao;
 
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.mapping.Map;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import um.canario.grupo1.models.beans.TweetBean;
-import um.canario.grupo1.models.beans.UsuarioBean;
 import um.canario.grupo1.utils.HibernateUtil;
 
 public class TweetDao extends HibernateDaoSupport{
 
     String sesion_key = "usuario";
 
-    public boolean guardarTweet(TweetBean tweetBean, HttpServletRequest request) {
+    public TweetBean guardarTweet(TweetBean tweetBean, HttpServletRequest request) {
         try {
             SessionFactory sesion = HibernateUtil.getSessionFactory();
             Transaction t = null;
             Session session = sesion.openSession();
-            //Query query = session.createQuery("FROM UsuariosBean t where t.id=1");
             t = session.beginTransaction();
+            
             session.persist(tweetBean);
-            System.err.println("NuevoTWEET" + tweetBean.getTweet());
+            
+            session.flush(); 
+            Integer idTweet = tweetBean.getId();
             t.commit();
             
-            return true;
+            System.err.println("NuevoTWEET: " + idTweet.toString());
+
+            return tweetBean;
 
         } catch (Exception e) {
-            System.err.println("ViejoTWEET" + tweetBean.getTweet());
-            return false;
+            System.err.println("ViejoTWEET: " + tweetBean.getTweet());
+            tweetBean.setTweet("error#1004");
+            return tweetBean;
         }
 
     }

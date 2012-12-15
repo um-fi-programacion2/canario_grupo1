@@ -93,6 +93,7 @@ public UsuarioBean getUsuario(String nombreUsuario){
           usuarioBean = (UsuarioBean) query.list().get(0);
         } catch (Exception e) {
           System.err.println("ErrorHIBERNATE !-->" + e);
+          usuarioBean.setId(-1);
         }
        s.close();
        

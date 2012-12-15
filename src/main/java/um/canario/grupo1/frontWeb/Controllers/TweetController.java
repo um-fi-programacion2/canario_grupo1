@@ -20,6 +20,10 @@ import um.canario.grupo1.models.logic.TweetLogic;
 @Controller
 @RequestMapping(value="/tweet")
 public class TweetController {
+    
+    public TweetController(){
+        //ifNOTSessionCHAO....
+    }
 
         @RequestMapping(value="/nuevo" , method=RequestMethod.GET)
         public String nuevo(Model model) {   

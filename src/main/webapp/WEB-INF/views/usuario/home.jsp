@@ -10,17 +10,17 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Tweets publicados</li>
-              <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/tweet/${usuario.nombre}')">Tweets</a></li>
+              <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/tweet/${usuario.nombre}')" style="cursor: pointer">Tweets</a></li>
               <li class="nav-header">Personas a las que sigo</li>
-              <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/follow/following/${usuario.id}')">Following</a></li>
+              <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/follow/following/${usuario.id}')" style="cursor: pointer">Following</a></li>
               <li class="nav-header">Personas que me siguen</li>
-              <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/follow/followers/${usuario.id}')">Followers</a></li>
+              <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/follow/followers/${usuario.id}')" style="cursor: pointer">Followers</a></li>
             </ul>
           </div><!--/.well -->
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Tweets en los que aparezco</li>
-              <li><a href="#">Mentions</a></li>
+              <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/menciones/${usuario.nombre}')" style="cursor: pointer">Mentions</a></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
