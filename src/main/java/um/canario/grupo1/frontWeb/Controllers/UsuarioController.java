@@ -44,14 +44,16 @@ public class UsuarioController {
         }   
         
         @RequestMapping(value="/{nombreDeUsuario}" , method=RequestMethod.GET)
-        public String home(@PathVariable String nombreDeUsuario, Model model, ModelAndView mav, UsuarioDao usuarioDao, TweetDao tweetDao) {    
-            //mav.addObject("following", usuarioDao.getFollowing(nombreDeUsuario));
-            //mav.addObject("followers", usuarioDao.getFollowers(nombreDeUsuario));
-            //mav.addObject("mentions", tweetDao.getMentions(nombreDeUsuario"));
+        public String home(@PathVariable String nombreDeUsuario, Model model, ModelAndView mav, UsuarioDao usuarioDao, TweetDao tweetDao, FollowDao followDao) {    
+            
+            
+            UsuarioBean usuarioBean = usuarioDao.getUsuario(nombreDeUsuario);
+                    
             
             model.addAttribute("tweets", tweetDao.getTweets(nombreDeUsuario));
-            model.addAttribute("usuario", usuarioDao.getUsuario(nombreDeUsuario));
-            
+            model.addAttribute("user", usuarioDao.getUsuario(nombreDeUsuario));
+            model.addAttribute("relaciones", usuarioBean.getId());
+
             mav.setViewName("usuario/home");
             
             //mav.

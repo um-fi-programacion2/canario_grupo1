@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%;">
   <head>
     <meta charset="utf-8">
     <title>Proyecto CANARIO</title>
@@ -69,10 +69,25 @@
           $(div + "unfollow").hide();
           $(div + "follow").show();
     }
+    
+    String.prototype.parseUsername = function() {
+	return this.replace(/[@]+[A-Za-z0-9-_]+/g, function(u) {
+		var username = u.replace("@","")
+		return u.link("${pageContext.request.contextPath}/usuario/"+username);
+	});
+    };
+    String.prototype.parseHashtag = function() {
+	return this.replace(/[#]+[A-Za-z0-9-_]+/g, function(t) {
+		var tag = t.replace("#","")
+		return t.link("${pageContext.request.contextPath}/hashtag/"+tag);
+	});
+    }
+
+    
     </script>
   </head>
 
-  <body>
+  <body style="height: 100%;">
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">

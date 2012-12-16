@@ -13,5 +13,6 @@
     <mapping resource="um/canario/grupo1/models/beans/Tweets.hbm.xml"/>
     <mapping resource="um/canario/grupo1/models/beans/Relaciones.hbm.xml"/>
     <mapping resource="um/canario/grupo1/models/beans/Menciones.hbm.xml"/>
+    <mapping resource="um/canario/grupo1/models/beans/Tags.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

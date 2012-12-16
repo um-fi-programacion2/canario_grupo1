@@ -4,7 +4,6 @@ package um.canario.grupo1.models.dao;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,6 +19,7 @@ import um.canario.grupo1.utils.HibernateUtil;
 public class MencionesDao extends HibernateDaoSupport{
 
     
+    
 public boolean guardar (List<String> mentions, Integer idTweet){
     
         Menciones mencion = new Menciones();
@@ -31,7 +31,7 @@ public boolean guardar (List<String> mentions, Integer idTweet){
                 usuarioBean = usuarioDao.getUsuario(name);
                 mencion.setIdUsuario(usuarioBean.getId());
                 
-                System.err.println("NOEMPTY" + usuarioBean.getEmail());
+                System.err.println("Mención: " + usuarioBean.getEmail());
 
                 if(usuarioBean.getId() == -1){  //Significa que la cadena @.... no corresponde a ningun usuario.
                     System.err.println("ISEMPTY" + usuarioBean.getEmail());
@@ -54,8 +54,37 @@ public boolean guardar (List<String> mentions, Integer idTweet){
        return true;
     }
 
-public List<UsuarioBean> getUsuarios(String nombreDeUsuario){
+
+
+public List<Menciones> getMenciones(String idUsuario) { //Devuelve las menciones (idTweet+idUsuario) de un idUsuario
+
+           try {
+                        List<Menciones> menciones = new ArrayList<Menciones>();
+                        
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+                        Transaction t = null;
+                        Session s = sf.openSession();
+			t = s.beginTransaction(); // start a new transaction
+			Query query = s.createQuery("FROM Menciones mencion where mencion.idUsuario = " + idUsuario);
+                        t.commit();
+                        menciones = query.list();
+                        
+                        
+                        
+                       return menciones;
+		
+		} catch (Exception ex) {
+			System.err.println("Error  getMenciones()!-->" + ex.getMessage());
+			
+			return null;
         
+                }
+        }
+
+
+
+public List<UsuarioBean> getUsuarios(String nombreDeUsuario){ //Devuelve los usuarios que escriben los tweets donde
+                                                              //se menciona a nombreDeUsuario
         List<UsuarioBean> usuarios = new ArrayList<UsuarioBean>();
         
         try {
@@ -67,7 +96,7 @@ public List<UsuarioBean> getUsuarios(String nombreDeUsuario){
                 UsuarioDao usuarioDao = new UsuarioDao();
                 UsuarioBean usuario = usuarioDao.getUsuario(nombreDeUsuario);
                 
-                String IN = this.getUsuariosIdsString(usuario);
+                String IN = this.getUsuariosIdsString(usuario); //Trae usuarios 
                 
                 Query query = s.createQuery("FROM UsuarioBean t where t.id IN " + IN);  
                
@@ -82,7 +111,7 @@ public List<UsuarioBean> getUsuarios(String nombreDeUsuario){
             }
        }
 
-public List<TweetBean> getTweets(String nombreDeUsuario){
+public List<TweetBean> getTweets(String nombreDeUsuario){ //Devuelve los tweets donde se menciona a nombreDeUsuario
                 
             List<TweetBean> tweets = new ArrayList<TweetBean>();
             
@@ -112,34 +141,8 @@ public List<TweetBean> getTweets(String nombreDeUsuario){
 
 
 
-public List<Menciones> getMenciones(String idUsuario) {
-
-           try {
-                        List<Menciones> menciones = new ArrayList<Menciones>();
-                        
-			SessionFactory sf = HibernateUtil.getSessionFactory();
-                        Transaction t = null;
-                        Session s = sf.openSession();
-			t = s.beginTransaction(); // start a new transaction
-			Query query = s.createQuery("FROM Menciones mencion where mencion.idUsuario = " + idUsuario);
-                        t.commit();
-                        menciones = query.list();
-                        
-                        
-                        
-                       return menciones;
-		
-		} catch (Exception ex) {
-			System.err.println("Error  getMenciones()!-->" + ex.getMessage());
-			
-			return null;
-        
-                }
-        }
-
-
-          
-private String getUsuariosIdsString(UsuarioBean usuario) {     
+private String getUsuariosIdsString(UsuarioBean usuario) { //Devuelve los ID´s de los usuarios que escriben los tweets
+                                                           //donde se menciona a idUsuario
         
         List<TweetBean> tweetsIds = new ArrayList<TweetBean>();
        
@@ -168,7 +171,7 @@ private String getUsuariosIdsString(UsuarioBean usuario) {
         return IN; //devuelve algo como (12,232,42,24)
     }
           
-public String getTweetsIdsString(String idUsuario) {
+public String getTweetsIdsString(String idUsuario) { //Devuelve los ID´s de los tweets donde se menciona a idUsuario
 
         List<Menciones> tweetsIds = new ArrayList<Menciones>();
        

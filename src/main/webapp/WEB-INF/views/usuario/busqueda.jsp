@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+    <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <jsp:include page="../header.jsp" />
@@ -9,8 +9,8 @@
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">1</li>
-              <li>2</li>
+              <li class="nav-header">Conecta con el mundo</li>
+              <li>Canarinea socialmente!</li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->

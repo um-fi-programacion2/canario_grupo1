@@ -84,7 +84,7 @@
 
       <!-- Example row of columns -->
    <div class="hero-unit">
-        <h2>Bienvenido al proyecto CANARIO! (index)</h2>
+        <h2>Bienvenido al proyecto CANARIO!</h2>
         <p>Regístrese ahora y únase al mundo de los canarios.</p>
       <div class="row">
         <div class="span6"> 

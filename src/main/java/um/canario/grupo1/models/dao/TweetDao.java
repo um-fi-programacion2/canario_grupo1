@@ -22,6 +22,8 @@ public class TweetDao extends HibernateDaoSupport{
             Session session = sesion.openSession();
             t = session.beginTransaction();
             
+            tweetBean.setTweet(tweetBean.getTweet().replace(System.getProperty("line.separator"), ""));
+            
             session.persist(tweetBean);
             
             session.flush(); 
