@@ -52,6 +52,11 @@
 			<version>1.2.16</version>
 			<scope>runtime</scope>
 		</dependency>
+                <dependency>
+                     <groupId>javax.mail</groupId>
+                     <artifactId>mail</artifactId>
+                     <version>1.4.3</version>
+                </dependency>
 
 		<!--  JSR 303 with Hibernate Validator -->
 		<dependency>
@@ -170,12 +175,6 @@
 			<snapshots><enabled>false</enabled></snapshots>			
 		</repository>
 	 <repository>
-	  <url>http://download.java.net/maven/2/</url>
-	  <id>hibernate-support</id>
-	  <layout>default</layout>
-	  <name>Repository for library Library[hibernate-support]</name>
-	 </repository>
-	 <repository>
 	  <id>unknown-jars-temp-repo</id>
 	  <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
 	  <url>file:${project.basedir}/lib</url>
@@ -185,6 +184,10 @@
           <name>twitter-text</name>
           <url>http://repo.typesafe.com/typesafe/releases/</url>
           </repository>
+          <repository>
+            <id>Java.Net</id>
+            <url>http://download.java.net/maven/2/</url>
+        </repository>
 	</repositories>
         
 	<build>

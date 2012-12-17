@@ -28,7 +28,9 @@
 
         <div class="row-fluid">
             <div class="well" id="h" style="">
+                
                 <c:forEach items="${usuarios}" var="usuario">
+                    <c:if test="${usuario.id != sessionId}">
                     <div style="border-bottom: 1px #bce8f1 solid; margin-bottom: 15px; padding-bottom: 15px;">
                         <div style="padding: 0px; float:left; padding-top: 5px;">
                             
@@ -59,8 +61,7 @@
                                         </c:if>
                                    </c:if>
                                 </c:forEach>
-                            </c:if>
-                       
+                        </c:if>                     
 
                             <a href="${pageContext.request.contextPath}/usuario/${usuario.nombre}" style="font-size:x-small">
                                 <img src="${pageContext.request.contextPath}/resources/img/usuarios/${usuario.imagen}" class="img-rounded" style="margin-right: 25px;width: 50px;" >
@@ -77,6 +78,7 @@
                             ${usuario.biografia}
                         </div>
                     </div>
+                  </c:if>
                 </c:forEach>
                   
                   

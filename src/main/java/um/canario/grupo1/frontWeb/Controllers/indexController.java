@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import um.canario.grupo1.models.beans.UsuarioBean;
 
+
 @Controller
 @RequestMapping(value="/")
 public class indexController {
@@ -14,7 +15,9 @@ public class indexController {
 	@RequestMapping(method=RequestMethod.GET)
         public String index(Model model) {
             model.addAttribute("usuario", new UsuarioBean());
-                    return "index";
+            
+            return "index";
+                    
         }
                
         @RequestMapping(value="/timeline" , method=RequestMethod.GET)

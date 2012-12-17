@@ -1,13 +1,10 @@
 package um.canario.grupo1.frontWeb.Controllers;
 
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import um.canario.grupo1.models.beans.TweetBean;
 import um.canario.grupo1.models.beans.UsuarioBean;
 import um.canario.grupo1.models.dao.FollowDao;
 import um.canario.grupo1.models.dao.TweetDao;
@@ -44,16 +40,19 @@ public class UsuarioController {
         }   
         
         @RequestMapping(value="/{nombreDeUsuario}" , method=RequestMethod.GET)
-        public String home(@PathVariable String nombreDeUsuario, Model model, ModelAndView mav, UsuarioDao usuarioDao, TweetDao tweetDao, FollowDao followDao) {    
+        public String home(@PathVariable String nombreDeUsuario, HttpServletRequest request, Model model, ModelAndView mav, UsuarioDao usuarioDao, TweetDao tweetDao, FollowDao followDao) {    
             
             
             UsuarioBean usuarioBean = usuarioDao.getUsuario(nombreDeUsuario);
-                    
+            String follower = request.getSession().getAttribute("id").toString();
             
             model.addAttribute("tweets", tweetDao.getTweets(nombreDeUsuario));
             model.addAttribute("user", usuarioDao.getUsuario(nombreDeUsuario));
-            model.addAttribute("relaciones", usuarioBean.getId());
-
+            model.addAttribute("relaciones", followDao.getRelaciones(follower));
+            model.addAttribute("sessionId", request.getSession().getAttribute("id"));
+            System.err.println("FollowerID: " + follower);
+            
+            
             mav.setViewName("usuario/home");
             
             //mav.
@@ -105,8 +104,7 @@ public class UsuarioController {
             String follower = request.getSession().getAttribute("id").toString();
             model.addAttribute("usuarios", usuarioDao.getUsuarios(busqueda));
             model.addAttribute("relaciones", followDao.getRelaciones(follower));
-            
-            System.err.println("ERRORAass: " + follower);
+            model.addAttribute("sessionId", request.getSession().getAttribute("id"));
             
             return "usuario/busqueda";
         }

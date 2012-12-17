@@ -34,43 +34,43 @@
                          <img src="${pageContext.request.contextPath}/resources/img/usuarios/${user.imagen}" class="img-rounded" width="140" style="margin-right: 15px;" > 
                          </a>
                          <br /><br />
-                            <c:if test="${ empty relaciones}">
-                                        <button id="${usuario.id}follow" onclick="follow('#${usuario.id}','${pageContext.request.contextPath}/follow/${usuario.id}')" class="btn btn-success" type="button" style="margin-right: 25px; width: 140px"><i class="icon-ok icon-white" ></i> Follow</button>
-                                        <button id="${usuario.id}unfollow" onclick="unfollow('#${usuario.id}','${pageContext.request.contextPath}/follow/unfollow/${usuario.id}')" class="btn btn-danger" type="button" style="margin-right: 25px; display: none; width: 140px"><i class="icon-remove icon-white" ></i> Unfollow</button>
-                            </c:if>
-                                                      
-                            <c:set var="banderaB" value="true" />
-                            <c:forEach items="${relaciones}" var="follow">
-                                <c:if test="${banderaB}">
-                                    <c:if test="${follow.followed == usuario.id}">
-                                        <button id="${usuario.id}unfollow" onclick="unfollow('#${usuario.id}','${pageContext.request.contextPath}/follow/unfollow/${usuario.id}')" class="btn btn-danger" type="button" style="margin-right: 25px; width: 140px;"><i class="icon-remove icon-white" ></i> Unfollow</button>
-                                        <button id="${usuario.id}follow" onclick="follow('#${usuario.id}','${pageContext.request.contextPath}/follow/${usuario.id}')" class="btn btn-success" type="button" style="margin-right: 25px; display: none; width: 140px"><i class="icon-ok icon-white" ></i> Follow</button>
-                                        <c:set var="banderaB" value="false" />
-                                    </c:if>
+                         <c:if test="${user.id != sessionId}">
+                                <c:if test="${ empty relaciones}">
+                                    <button id="${user.id}follow" onclick="follow('#${user.id}','${pageContext.request.contextPath}/follow/${user.id}')" class="btn btn-success" type="button" style="margin-right: 25px; width: 140px"><i class="icon-ok icon-white" ></i> Follow</button>
+                                    <button id="${user.id}unfollow" onclick="unfollow('#${user.id}','${pageContext.request.contextPath}/follow/unfollow/${user.id}')" class="btn btn-danger" type="button" style="margin-right: 25px; display: none; width: 140px"><i class="icon-remove icon-white" ></i> Unfollow</button>
                                 </c:if>
-                            </c:forEach>
-                            
-                            <c:if test="${banderaB}">
-                               <c:set var="banderaA" value="true" />
-                               <c:forEach items="${relaciones}" var="follow">
-                                   <c:if test="${banderaA}">
-                                        <c:if test="${follow.followed!=usuario.id}">
-                                            <button id="${usuario.id}follow" onclick="follow('#${usuario.id}','${pageContext.request.contextPath}/follow/${usuario.id}')" class="btn btn-success" type="button" style="margin-right: 25px; width: 140px"><i class="icon-ok icon-white" ></i> Follow</button>
-                                            <button id="${usuario.id}unfollow" onclick="unfollow('#${usuario.id}','${pageContext.request.contextPath}/follow/unfollow/${usuario.id}')" class="btn btn-danger" type="button" style="margin-right: 25px; display: none; width: 140px"><i class="icon-remove icon-white" ></i> Unfollow</button>
-                                            <c:set var="banderaA" value="false" />
+                                        <c:set var="banderaB" value="true" />
+                                        <c:forEach items="${relaciones}" var="follow">
+                                            <c:if test="${banderaB}">
+                                                <c:if test="${follow.followed == user.id}">
+                                                    <button id="${user.id}unfollow" onclick="unfollow('#${user.id}','${pageContext.request.contextPath}/follow/unfollow/${user.id}')" class="btn btn-danger" type="button" style="margin-right: 25px; width: 140px;"><i class="icon-remove icon-white" ></i> Unfollow</button>
+                                                    <button id="${user.id}follow" onclick="follow('#${user.id}','${pageContext.request.contextPath}/follow/${user.id}')" class="btn btn-success" type="button" style="margin-right: 25px; display: none; width: 140px"><i class="icon-ok icon-white" ></i> Follow</button>
+                                                    <c:set var="banderaB" value="false" />
+                                                </c:if>
+                                            </c:if>
+                                        </c:forEach>
+
+                                        <c:if test="${banderaB}">
+                                           <c:set var="banderaA" value="true" />
+                                           <c:forEach items="${relaciones}" var="follow">
+                                               <c:if test="${banderaA}">
+                                                    <c:if test="${follow.followed!=user.id}">
+                                                        <button id="${user.id}follow" onclick="follow('#${user.id}','${pageContext.request.contextPath}/follow/${user.id}')" class="btn btn-success" type="button" style="margin-right: 25px; width: 140px"><i class="icon-ok icon-white" ></i> Follow</button>
+                                                        <button id="${user.id}unfollow" onclick="unfollow('#${user.id}','${pageContext.request.contextPath}/follow/unfollow/${user.id}')" class="btn btn-danger" type="button" style="margin-right: 25px; display: none; width: 140px"><i class="icon-remove icon-white" ></i> Unfollow</button>
+                                                        <c:set var="banderaA" value="false" />
+                                                    </c:if>
+                                               </c:if>
+                                            </c:forEach>
                                         </c:if>
-                                   </c:if>
-                                </c:forEach>
-                            </c:if>
-                         
+                              </c:if>
                         </div>
                         <div  style="float: left" >
                             <h2>
-                              <a href="${pageContext.request.contextPath}/usuario/${usuario.nombre}">@${usuario.nombre}</a>
+                              <a href="${pageContext.request.contextPath}/usuario/${user.nombre}">@${user.nombre}</a>
                            </h2>
 
                             <br />
-                            <h5>${usuario.biografia}</h5>
+                            <h5>${user.biografia}</h5>
                         </div>
 
                     </div>

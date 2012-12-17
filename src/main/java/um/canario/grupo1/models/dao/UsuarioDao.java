@@ -100,7 +100,27 @@ public UsuarioBean getUsuario(String nombreUsuario){
                 return usuarioBean;
 }
     
+public UsuarioBean getUsuarioConID(String idUsuario){
+        
+       UsuarioBean usuarioBean = new UsuarioBean();       
+       SessionFactory sf = HibernateUtil.getSessionFactory();
+       
+       
+       Session s = sf.openSession();
+	
+       Query query = s.createQuery("FROM UsuarioBean u where u.id = :iduser");
+       query.setParameter("iduser", Integer.parseInt(idUsuario));
 
+       try {
+          usuarioBean = (UsuarioBean) query.list().get(0);
+        } catch (Exception e) {
+          System.err.println("FROM UsuarioBean u where u.id =-->" + idUsuario + " ||||| " + e);
+          usuarioBean.setId(-1);
+        }
+       s.close();
+       
+                return usuarioBean;
+}
 
 public List<UsuarioBean> getUsuarios(String busqueda){
         
