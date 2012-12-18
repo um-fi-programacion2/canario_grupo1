@@ -26,5 +26,8 @@
         <property name="biografia" type="string">
             <column name="biografia" length="200" />
         </property>
+        <property name="key" type="string">
+            <column name="key" length="1000" />
+        </property>
     </class>
 </hibernate-mapping>

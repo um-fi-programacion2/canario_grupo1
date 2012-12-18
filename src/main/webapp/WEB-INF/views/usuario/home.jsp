@@ -23,6 +23,35 @@
                     <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/menciones/${user.nombre}')" style="cursor: pointer">Mentions</a></li>
                 </ul>
             </div><!--/.well -->
+           <div class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">TOP #10
+                        <select name="localidad">
+                            <option>Ciudad</option>
+                            <option>blabla</option>
+                        </select>
+                    
+                    </li>
+                    <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/menciones/${user.nombre}')" style="cursor: pointer">#CFK</a></li>
+                    <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/menciones/${user.nombre}')" style="cursor: pointer">#CFK</a></li>
+                    <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/menciones/${user.nombre}')" style="cursor: pointer">#CFK</a></li>
+                    <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/menciones/${user.nombre}')" style="cursor: pointer">#CFK</a></li>
+                </ul>
+            </div><!--/.well -->
+            <div class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">TOP @10
+                        <select name="localidad">
+                            <option>Ciudad</option>
+                            <option>blabla</option>
+                        </select>
+                    </li>
+                    <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/menciones/${user.nombre}')" style="cursor: pointer">@eduardotomassi</a></li>
+                    <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/menciones/${user.nombre}')" style="cursor: pointer">@eduardotomassi</a></li>
+                    <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/menciones/${user.nombre}')" style="cursor: pointer">@eduardotomassi</a></li>
+                    <li><a onclick="cargar('#cuerpo','${pageContext.request.contextPath}/menciones/${user.nombre}')" style="cursor: pointer">@eduardotomassi</a></li>
+                </ul>
+            </div><!--/.well -->
         </div><!--/span-->
 
         <div class="span9">
