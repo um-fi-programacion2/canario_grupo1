@@ -9,35 +9,36 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import um.canario.grupo1.models.beans.UsuarioBean;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import um.canario.grupo1.models.beans.Userconfig;
 import um.canario.grupo1.utils.HibernateUtil;
 
 public class UsuarioDao extends HibernateDaoSupport  {
     
     String sesion_key = "usuario";
     
-    public boolean registrar(UsuarioBean usuario){
+    public UsuarioBean registrar(UsuarioBean usuario){
         
-                try {
-                    //getHibernateTemplate().save(usuario);
-                usuario.setImagen("user.png");
-                SessionFactory sesion = HibernateUtil.getSessionFactory();
-                Transaction t = null;
-                Session session = sesion.openSession();
-                //Query query = session.createQuery("FROM UsuariosBean t where t.id=1");
-                
-                t = session.beginTransaction();
-                usuario.setNombre(usuario.getNombre().toLowerCase());
-                usuario.setEmail(usuario.getEmail().toLowerCase());
-                
-                session.persist(usuario);
-                t.commit();
-                
-                return true;
-                    
-                } catch (Exception e) {
-                    System.err.println("Error !-->" + e.getMessage()); 
-                    return false;
-                }
+        
+        try {
+        usuario.setImagen("user.png");
+        SessionFactory sesion = HibernateUtil.getSessionFactory();
+        Transaction t = null;
+        Session session = sesion.openSession();
+
+        t = session.beginTransaction();
+        usuario.setNombre(usuario.getNombre().toLowerCase());
+        usuario.setEmail(usuario.getEmail().toLowerCase());
+
+        session.persist(usuario);
+        
+        session.flush(); 
+        t.commit();
+        return usuario;
+
+        } catch (Exception e) {
+            System.err.println("Error !-->" + e.getMessage()); 
+            return usuario;
+        }
         
             
 
@@ -88,6 +89,8 @@ public UsuarioBean getUsuario(String nombreUsuario){
 	
        Query query = s.createQuery("FROM UsuarioBean u where u.nombre = :nombre");
        query.setParameter("nombre", nombreUsuario);
+         
+       //System.err.println("nooooo->" + nombreUsuario);
 
        try {
           usuarioBean = (UsuarioBean) query.list().get(0);
@@ -100,7 +103,7 @@ public UsuarioBean getUsuario(String nombreUsuario){
                 return usuarioBean;
 }
     
-public UsuarioBean getUsuarioConID(String idUsuario){
+public UsuarioBean getUsuarioConID(Integer idUsuario){
         
        UsuarioBean usuarioBean = new UsuarioBean();       
        SessionFactory sf = HibernateUtil.getSessionFactory();
@@ -109,7 +112,7 @@ public UsuarioBean getUsuarioConID(String idUsuario){
        Session s = sf.openSession();
 	
        Query query = s.createQuery("FROM UsuarioBean u where u.id = :iduser");
-       query.setParameter("iduser", Integer.parseInt(idUsuario));
+       query.setParameter("iduser", idUsuario);
 
        try {
           usuarioBean = (UsuarioBean) query.list().get(0);
@@ -202,11 +205,76 @@ public List<UsuarioBean> getUsuarios(String busqueda){
                     System.err.println("Error !-->" + e.getMessage()); 
                     return false;
                 }
+    }
+    
+    
+        public boolean actualizarNotificaciones(Userconfig usuario){
+           try {
+                    SessionFactory sesion = HibernateUtil.getSessionFactory();
+                    Transaction t = null;
+                    Session session = sesion.openSession();
+                    t = session.beginTransaction();
+                    Query query = session.createQuery("update Userconfig u set u.notificacionesMentions = :mencion, u.notificacionesFollow= :follow, "
+                            + "u.notificacionesRetweet = :retweet  " 
+                            + " where u.idUsuario = :id");
+                    query.setParameter("mencion", usuario.getNotificacionesMentions());
+                    query.setParameter("follow", usuario.getNotificacionesFollow());
+                    query.setParameter("retweet", usuario.getNotificacionesRetweet());
+                    query.setParameter("id", usuario.getIdUsuario());
+                    query.executeUpdate();
+                    session.getTransaction().commit();
+                    session.close();
+                    
+                    return true;
+
+                } catch (Exception e) {
+                    System.err.println("Error actualizarNotificaciones !-->" + e.getMessage()); 
+                    return false;
+                }
     
         
         
     }
+        public boolean setNotificaciones(Userconfig usuario){
+           
+           try {
+                SessionFactory sesion = HibernateUtil.getSessionFactory();
+                Transaction t = null;
+                Session session = sesion.openSession();
+                t = session.beginTransaction();
+                session.persist(usuario);
+                t.commit();
+                
+                return true;
+                    
+                } catch (Exception e) {
+                    System.err.println("Error !-->" + e.getMessage()); 
+                    return false;
+                }
+    }
     
-    
+    public Userconfig getNotificaciones(Integer idUsuario){
+        
+       Userconfig userConfig = new Userconfig();       
+       SessionFactory sf = HibernateUtil.getSessionFactory();
+       
+       
+       Session s = sf.openSession();
+	
+       Query query = s.createQuery("FROM Userconfig u where u.idUsuario = :iduser");
+       query.setParameter("iduser", idUsuario);
+
+ 
+       
+       try {
+          userConfig = (Userconfig) query.list().get(0);
+          System.err.println("TRY FROM Userconfig u where u.id =-->" + idUsuario + " ||||| ");
+        } catch (Exception e) {
+          System.err.println("CATCH FROM Userconfig u where u.id =-->" + idUsuario + " ||||| " + e);
+        }
+       s.close();
+       
+                return userConfig;
+    }
    
 }

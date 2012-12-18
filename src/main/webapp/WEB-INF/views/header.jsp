@@ -129,8 +129,8 @@
                                </li>
                             <li class="divider"></li>
                             <li><a href="${pageContext.request.contextPath}/usuario/perfil/imagen" > <i class="icon-picture"></i> Cambiar imagen de perfil</a></li>
-                            <li><a href="#"><i class="icon-bell"></i> Configurar notificaciones</a></li>
-                            <li><a href="#"><i class="icon-eye-open"></i> Ver mi página de usuario pública</a></li>
+                            <li><a href="${pageContext.request.contextPath}/usuario/notificaciones"><i class="icon-bell"></i> Configurar notificaciones</a></li>
+                            <li><a href="${pageContext.request.contextPath}/usuario/<%= session.getAttribute("nombre")%>"><i class="icon-eye-open"></i> Ver mi página de usuario pública</a></li>
                             <li class="divider"></li>
                             <li><a href="${pageContext.request.contextPath}/usuario/cerrarSesion"><i class="icon-off"></i> Cerrar sesión</a></li>
                           </ul>

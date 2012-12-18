@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import um.canario.grupo1.models.beans.Userconfig;
 import um.canario.grupo1.models.beans.UsuarioBean;
 import um.canario.grupo1.models.dao.FollowDao;
 import um.canario.grupo1.models.dao.TweetDao;
@@ -29,9 +30,18 @@ public class UsuarioController {
         
         @RequestMapping(value="/registrar" , method=RequestMethod.POST)
         public String registrar(@ModelAttribute("usuario") UsuarioBean usuario, HttpServletRequest request) {
-               
-             UsuarioDao usuarioDao = new UsuarioDao();               
-               if(usuarioDao.registrar(usuario) && usuarioDao.iniciarSesion(usuario, request)){
+            
+            UsuarioDao usuarioDao = new UsuarioDao();
+            Userconfig userConfig = new Userconfig();
+            
+            userConfig.setNotificacionesFollow(true);
+            userConfig.setNotificacionesMentions(true);
+            userConfig.setNotificacionesRetweet(true);
+            
+            UsuarioBean usuarioBean= usuarioDao.registrar(usuario);
+            userConfig.setIdUsuario(usuarioBean.getId());
+            
+               if(usuarioDao.setNotificaciones(userConfig) && usuarioDao.iniciarSesion(usuario, request)){
                    return "redirect:/usuario/" + request.getSession().getAttribute("nombre");
                }
                else{
@@ -87,6 +97,22 @@ public class UsuarioController {
             return "usuario/imagen";
         }
         
+        @RequestMapping(value="/notificaciones" , method=RequestMethod.GET)
+        public String modificarNotificaciones(Model model, UsuarioDao usuarioDao, HttpServletRequest request) { 
+            
+            model.addAttribute("Userconfig", usuarioDao.getNotificaciones((Integer)request.getSession().getAttribute("id"))); 
+            return "usuario/notificaciones";
+        }
+        
+        @RequestMapping(value="/notificaciones/procesar" , method=RequestMethod.POST)
+        public String notificaciones(@ModelAttribute("Userconfig") Userconfig userConfig, Model model, HttpServletRequest request) { 
+                        
+            userConfig.setIdUsuario( (Integer)(request.getSession().getAttribute("id")) );
+    
+            UsuarioDao usuario = new UsuarioDao();
+            usuario.actualizarNotificaciones(userConfig);
+            return "usuario/notificaciones";
+        }
         
         @RequestMapping(value = "/perfil/imagen/procesar", method = RequestMethod.POST)
         public String modificarImagen(@RequestParam("file") MultipartFile file, HttpServletRequest request ) throws Exception {
@@ -135,89 +161,4 @@ public class UsuarioController {
                    return "redirect:/";
                }
         }
-        
-/*	
-	@RequestMapping(method=RequestMethod.GET)
-	public String getCreateForm(Model model) {
-                model.addAttribute("usuario", new Usuario());
-		return "usuario/createForm";
-	}
-	
-	@RequestMapping(method=RequestMethod.POST)
-	public String create() {
-                if(binding.hasErrors()){ 
-                    return "redirect:/usuario/createForm";
-                }
-
-                this.users.put(usuario.assignId(),usuario);
-		return "redirect:/usuario/" + usuario.getId();
-	}
-	
-	@RequestMapping(value="{id}", method=RequestMethod.GET)
-	public String getView(@PathVariable Long id, Model model) {
-		Usuario usuario = this.users.get(id);
-		if (usuario == null) {
-			throw new ResourceNotFoundException(id);
-		}
-		model.addAttribute(usuario);
-		return "usuario/view";
-	}
-*/
-        /*
-        @RequestMapping(value="/iniciarSesion")
-        public String iniciarSesion() {
-            
-        return "timeline";
-        } 
-        
-        @RequestMapping(value="/cerrarSesion")
-        public String cerrarSesion() {
-        
-        return "index";
-        } */
-        
-        
-
-        /*
-        @RequestMapping(value="/modificarPerfil")
-        public String modificarPerfil() {
-        } 
-        
-        @RequestMapping(value="/modificarImagen")
-        public String modificarImagen() {
-        } 
-        
-        @RequestMapping(value="/modificarPassword")
-        public String modificarPassword() {
-        } 
-        
-        @RequestMapping(value="/tweetear")
-        public String tweetear() {
-        } 
-        
-        @RequestMapping(value="/retweetear")
-        public String retweetear() {
-        } 
-                
-        @RequestMapping(value="/verPerfil")
-        public String verPerfil() {
-        } 
-                
-        @RequestMapping(value="/seguir")
-        public String seguir() {
-        } 
-                
-        @RequestMapping(value="/dejarDeSeguir")
-        public String dejarDeSeguir() {
-        } 
-
-        @RequestMapping(value="/dameSeguidores")
-        public String dameSeguidores() {
-        } 
-                
-        @RequestMapping(value="/dameSeguidos")
-        public String dameSeguidos() {
-        } 
-        
-         */
 }

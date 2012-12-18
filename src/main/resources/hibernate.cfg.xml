@@ -9,10 +9,11 @@
     <property name="hibernate.connection.password">root</property>
     <property name="show_sql">true</property>
     <property name="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</property>
-    <mapping resource="um/canario/grupo1/models/beans/Usuarios.hbm.xml"/>
-    <mapping resource="um/canario/grupo1/models/beans/Tweets.hbm.xml"/>
+    <mapping resource="um/canario/grupo1/models/beans/UsuarioBean.hbm.xml"/>
+    <mapping resource="um/canario/grupo1/models/beans/TweetBean.hbm.xml"/>
     <mapping resource="um/canario/grupo1/models/beans/Relaciones.hbm.xml"/>
     <mapping resource="um/canario/grupo1/models/beans/Menciones.hbm.xml"/>
     <mapping resource="um/canario/grupo1/models/beans/Tags.hbm.xml"/>
+    <mapping resource="um/canario/grupo1/models/beans/Userconfig.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

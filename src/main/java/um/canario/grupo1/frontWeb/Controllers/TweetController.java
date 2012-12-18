@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import um.canario.grupo1.models.beans.TweetBean;
+import um.canario.grupo1.models.beans.UsuarioBean;
 import um.canario.grupo1.models.dao.TweetDao;
 import um.canario.grupo1.models.dao.UsuarioDao;
 import um.canario.grupo1.models.logic.TweetLogic;
@@ -50,6 +51,26 @@ public class TweetController {
             
             return "tweet/tweets";
         }
+        
+        
+        @RequestMapping(value="/retweet/{tweetId}" , method=RequestMethod.GET)
+        public String retweet(@PathVariable Integer tweetId, TweetDao tweetDao, HttpServletRequest request, UsuarioDao usuarioDao, UsuarioBean usuarioBean, TweetBean retweet) {
+           
+           TweetBean tweetBean = tweetDao.getTweet(tweetId);
+           usuarioBean = usuarioDao.getUsuarioConID(tweetBean.getIdUsuario()); 
+           
+           
+           
+           retweet.setAutor(usuarioBean.getNombre());
+           retweet.setIdUsuario((Integer)request.getSession().getAttribute("id"));
+           retweet.setTweet(tweetBean.getTweet());
+                      
+           tweetDao.guardarTweet(retweet);
+           
+            
+           return "redirect:../../usuario/" + request.getSession().getAttribute("nombre");
+        }
+                
 
 }
 

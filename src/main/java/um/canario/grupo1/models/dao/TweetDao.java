@@ -15,7 +15,7 @@ public class TweetDao extends HibernateDaoSupport{
 
     String sesion_key = "usuario";
 
-    public TweetBean guardarTweet(TweetBean tweetBean, HttpServletRequest request) {
+    public TweetBean guardarTweet(TweetBean tweetBean) {
         try {
             SessionFactory sesion = HibernateUtil.getSessionFactory();
             Transaction t = null;
@@ -23,6 +23,8 @@ public class TweetDao extends HibernateDaoSupport{
             t = session.beginTransaction();
             
             tweetBean.setTweet(tweetBean.getTweet().replace(System.getProperty("line.separator"), ""));
+            if(tweetBean.getAutor()==null) //Sino viene de retweetear autor es cero=idUsuario
+                tweetBean.setAutor("0");
             
             session.persist(tweetBean);
             
@@ -36,12 +38,33 @@ public class TweetDao extends HibernateDaoSupport{
 
         } catch (Exception e) {
             System.err.println("ViejoTWEET: " + tweetBean.getTweet());
+            System.err.println("Viejo: " + e);
+            System.err.println("uffff: " + tweetBean.getAutor());
             tweetBean.setTweet("error#1004");
             return tweetBean;
         }
 
     }
      
+      public TweetBean getTweet(Integer idTweet){
+          try {
+
+              SessionFactory sf = HibernateUtil.getSessionFactory();
+              Transaction t = null;
+              Session s = sf.openSession();
+              t = s.beginTransaction(); // start a new transaction
+              Query query = s.createQuery("FROM TweetBean tweet where tweet.id = :id");
+              query.setParameter("id", idTweet);
+              t.commit();
+              return (TweetBean) query.list().get(0);
+
+          } catch (Exception ex) {
+              System.err.println("Error !-->" + ex.getMessage());
+
+              return null;
+          }
+    } 
+    
     
     public List<TweetBean> getTweets(String Usuario){
      try {
@@ -60,41 +83,9 @@ public class TweetDao extends HibernateDaoSupport{
 			
 			return null;
 		}
-    }
-/*    public void SpringHibernateDao(SessionFactory sessionFactory) {  
-        super.setSessionFactory(sessionFactory);  
-    }  
-  
-    @Transactional  
-    public void persist(Object entity) {  
-        getHibernateTemplate().saveOrUpdate(entity);  
-    }  
-  
-    @Transactional  
-    public void persist(Object[] entities) {  
-        for (int i = 0; i < entities.length; i++) {  
-            persist(entities[i]);  
-        }  
-    }  
-  
-    @Transactional(readOnly = true)  
-    public <T> List<T> find(Class<T> entityClass) {  
-        final List<T> entities = getHibernateTemplate().loadAll(entityClass);  
-        return entities;  
-    }  
-  
-    @Transactional(readOnly = true)  
-    public <T> T load(Class<T> entityClass, Serializable id) {  
-        final T entity = (T)getHibernateTemplate().load(entityClass, id);  
-        return entity;  
-    }  
-  
-    @Transactional(readOnly = true)  
-    public <T> List<T> find(String hql) {  
-        final List<T> entities = getHibernateTemplate().find(hql);  
-        return entities;  
-    }  
-  */
+    }    
+    
+   
 }  
     
 
