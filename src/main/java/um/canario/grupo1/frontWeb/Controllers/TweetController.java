@@ -32,6 +32,15 @@ public class TweetController {
              return "tweet/nuevo";
         }
         
+        @RequestMapping(value="/nuevo/{usuario}" , method=RequestMethod.GET)
+        public String nuevoReply(Model model, @PathVariable String usuario) {   
+             TweetBean tweetBean = new TweetBean();
+             tweetBean.setTweet("@" + usuario); //Seteamos como default tweet @usuario para hacer el reply
+             
+             model.addAttribute("tweet", tweetBean);
+             return "tweet/nuevo";
+        }
+        
         @RequestMapping(value="/nuevo/procesar" , method=RequestMethod.POST)
         public String nuevoTweet(@ModelAttribute("tweet") TweetBean tweetBean, HttpServletRequest request) {   
              TweetLogic tweetLogic = new TweetLogic();

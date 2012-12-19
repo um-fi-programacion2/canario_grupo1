@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 13-dic-2012 13:56:49 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="um.canario.grupo1.models.beans.Relaciones" table="relaciones" catalog="canario">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="followed" type="int">
+            <column name="followed" not-null="true" />
+        </property>
+        <property name="follower" type="int">
+            <column name="follower" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

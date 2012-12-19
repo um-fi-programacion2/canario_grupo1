@@ -8,7 +8,7 @@
         <div class="span3">
             <div style="text-align: center">
                 <h1>
-                    <a onclick="cargar('#timeline', '${pageContext.request.contextPath}/timeline/refresh/0');">TIMELINE</a>
+                    <a onclick="cargar('#timeline', '${pageContext.request.contextPath}/timeline/refresh');">TIMELINE</a>
                 </h1>
             </div>
             <div class="well sidebar-nav" id="hashTop">
@@ -35,8 +35,8 @@
         </div><!--/span-->
     </div><!--/row-->
     <script>
-        cargar('#cuerpo','${pageContext.request.contextPath}/tweet/${user.nombre}');
-        cargar('#hashTop', '${pageContext.request.contextPath}/hashtag/TOP10');
+        cargar('#cuerpo',   '${pageContext.request.contextPath}/tweet/${user.nombre}');
+        cargar('#hashTop',  '${pageContext.request.contextPath}/hashtag/TOP10');
         cargar('#usersTop', '${pageContext.request.contextPath}/usuario/TOP10');
         cargar('#timeline', '${pageContext.request.contextPath}/timeline/refresh');
     </script>

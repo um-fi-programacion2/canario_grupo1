@@ -101,11 +101,11 @@
                                               <span class="add-on">@</span>
                                               <form:input path="nombre" style="width:200px" cssClass="span2"  id="inputIcon"/>                                            
                                             </div>
-                                          </div>				</p>
+                                          </div>				
                                 
-				<p>
-					<form:label for="email" path="email" cssErrorClass="error">E-mail</form:label>
-					<form:input path="email"  style="width:350px"/>			
+                                
+				<p>	<form:label for="email" path="email" cssErrorClass="error">E-mail</form:label>
+                                        <form:input path="email" cssStyle="width:350px" id="email" name="email" type="text" cssClass=":email :required :ajax;${pageContext.request.contextPath}/validacion/usuario : only_on_blur"/>
 				</p>
                                 <p>
                                         <form:label for="password" path="password" cssErrorClass="error">Contraseña</form:label>
