@@ -1,19 +1,5 @@
 package um.canario.grupo1.models.beans;
-// Generated 09-dic-2012 19:33:13 by Hibernate Tools 3.2.1.GA
 
-
-
-/**
-package com.mkyong.common.model;
- 
-public class Shop {
- 
-	String name;
-	String staffName[];
- 
-	//getter and setter methods
- 
-} */
 public class UsuarioBean {
 
 

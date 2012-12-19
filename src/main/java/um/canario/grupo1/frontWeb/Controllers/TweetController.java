@@ -36,7 +36,7 @@ public class TweetController {
         public String nuevoTweet(@ModelAttribute("tweet") TweetBean tweetBean, HttpServletRequest request) {   
              TweetLogic tweetLogic = new TweetLogic();
              tweetLogic.procesarTweet(tweetBean, request);
-             return "redirect:../../usuario/" + request.getSession().getAttribute("nombre");
+             return "redirect:../../timeline/";
         }
         
         @RequestMapping(value="/{nombreDeUsuario}" , method=RequestMethod.GET)
@@ -45,7 +45,6 @@ public class TweetController {
             
             tweets = tweetDao.getTweets(nombreDeUsuario);
             
-       
             model.addAttribute("tweets", tweets);
             model.addAttribute("usuario",usuarioDao.getUsuario(nombreDeUsuario));
             
@@ -58,9 +57,7 @@ public class TweetController {
            
            TweetBean tweetBean = tweetDao.getTweet(tweetId);
            usuarioBean = usuarioDao.getUsuarioConID(tweetBean.getIdUsuario()); 
-           
-           
-           
+                      
            retweet.setAutor(usuarioBean.getNombre());
            retweet.setIdUsuario((Integer)request.getSession().getAttribute("id"));
            retweet.setTweet(tweetBean.getTweet());
@@ -68,7 +65,7 @@ public class TweetController {
            tweetDao.guardarTweet(retweet);
            
             
-           return "redirect:../../usuario/" + request.getSession().getAttribute("nombre");
+           return "redirect:../../timeline";
         }
                 
 

@@ -1,115 +1,66 @@
 package um.canario.grupo1.frontWeb.Controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
+import um.canario.grupo1.models.beans.TweetBean;
 import um.canario.grupo1.models.beans.UsuarioBean;
-
+import um.canario.grupo1.models.dao.FollowDao;
+import um.canario.grupo1.models.dao.TweetDao;
+import um.canario.grupo1.models.dao.UsuarioDao;
 
 @Controller
-@RequestMapping(value="/")
+@RequestMapping(value = "/")
 public class indexController {
 
-	@RequestMapping(method=RequestMethod.GET)
-        public String index(Model model) {
-            model.addAttribute("usuario", new UsuarioBean());
-            
-            return "index";
-                    
-        }
-               
-        @RequestMapping(value="/timeline" , method=RequestMethod.GET)
-        public String timeline(Model model) {
-            model.addAttribute("usuario", new UsuarioBean());
-                    return "timeline";
-        }
-        
-        
-        
-/*	
-	@RequestMapping(method=RequestMethod.GET)
-	public String getCreateForm(Model model) {
-                model.addAttribute("usuario", new Usuario());
-		return "usuario/createForm";
-	}
-	
-	@RequestMapping(method=RequestMethod.POST)
-	public String create(@ModelAttribute("usuario") Usuario usuario, BindingResult binding) {
-                if(binding.hasErrors()){ 
-                    return "redirect:/usuario/createForm";
-                }
+    @RequestMapping(method = RequestMethod.GET)
+    public String index(Model model) {
+        model.addAttribute("usuario", new UsuarioBean());
 
-                this.users.put(usuario.assignId(),usuario);
-		return "redirect:/usuario/" + usuario.getId();
-	}
-	
-	@RequestMapping(value="{id}", method=RequestMethod.GET)
-	public String getView(@PathVariable Long id, Model model) {
-		Usuario usuario = this.users.get(id);
-		if (usuario == null) {
-			throw new ResourceNotFoundException(id);
-		}
-		model.addAttribute(usuario);
-		return "usuario/view";
-	}
-*/
-        /*
-        @RequestMapping(value="/iniciarSesion")
-        public String iniciarSesion() {
-            
-        return "timeline";
-        } 
-        
-        @RequestMapping(value="/cerrarSesion")
-        public String cerrarSesion() {
-        
         return "index";
-        } */
-        
-        
-        
-        /*
-        @RequestMapping(value="/modificarPerfil")
-        public String modificarPerfil() {
-        } 
-        
-        @RequestMapping(value="/modificarImagen")
-        public String modificarImagen() {
-        } 
-        
-        @RequestMapping(value="/modificarPassword")
-        public String modificarPassword() {
-        } 
-        
-        @RequestMapping(value="/tweetear")
-        public String tweetear() {
-        } 
-        
-        @RequestMapping(value="/retweetear")
-        public String retweetear() {
-        } 
-                
-        @RequestMapping(value="/verPerfil")
-        public String verPerfil() {
-        } 
-                
-        @RequestMapping(value="/seguir")
-        public String seguir() {
-        } 
-                
-        @RequestMapping(value="/dejarDeSeguir")
-        public String dejarDeSeguir() {
-        } 
+    }
 
-        @RequestMapping(value="/dameSeguidores")
-        public String dameSeguidores() {
-        } 
-                
-        @RequestMapping(value="/dameSeguidos")
-        public String dameSeguidos() {
-        } 
-        
-         */
+    
+    @RequestMapping(value = "timeline", method = RequestMethod.GET)
+    public String timeline(HttpServletRequest request) {
+
+        request.getSession().setAttribute("offsetTimeline","0");
+        return "timeline";
+    }
+    
+    @RequestMapping(value = "timeline/refresh", method = RequestMethod.GET)
+    public String timelineRefresh(Model model, UsuarioDao usuarioDao, TweetDao tweetDao, HttpServletRequest request, FollowDao followDao) {
+
+            List<TweetBean> tweets = new ArrayList<TweetBean>();
+            Integer id = (Integer) request.getSession().getAttribute("id");
+            List<UsuarioBean> usuarios = followDao.getFollowings(id.toString());
+            usuarios.add(usuarioDao.getUsuarioConID(id));
+            // IN con mis amigos y mi ID
+            String amigos = followDao.getFollowingsString(id.toString());
+            amigos = amigos.substring(0, amigos.length() - 1);
+            amigos = amigos + ", " + id + ")";
+
+            
+            String offset = (String) request.getSession().getAttribute("offsetTimeline");
+            
+            tweets = tweetDao.getTimeline(amigos, offset);
+
+            Integer offsetInt = Integer.parseInt(offset);
+            offsetInt = offsetInt + 5; //Cada vez que llama al método refresh corro 5 el offset
+            offset = offsetInt.toString();
+
+            request.getSession().setAttribute("offsetTimeline", offset);
+    
+            model.addAttribute("tweets", tweets);
+            model.addAttribute("usuarios", usuarios);
+
+        return "timeline/refresh";
+    }
+
 }

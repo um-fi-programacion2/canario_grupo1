@@ -20,7 +20,6 @@ import um.canario.grupo1.models.dao.FollowDao;
 import um.canario.grupo1.models.dao.TweetDao;
 import um.canario.grupo1.models.dao.UsuarioDao;
 import um.canario.grupo1.models.logic.UsuarioLogic;
-import um.canario.grupo1.utils.Hashing;
 
 
 @Controller
@@ -30,26 +29,16 @@ public class UsuarioController {
 	private Map<Long, UsuarioBean> users = new ConcurrentHashMap<Long, UsuarioBean>();
         
         @RequestMapping(value="/registrar" , method=RequestMethod.POST)
-        public String registrar(@ModelAttribute("usuario") UsuarioBean usuario, HttpServletRequest request, Hashing hash) {
+        public String registrar(@ModelAttribute("usuario") UsuarioBean usuario, HttpServletRequest request) {
             
             UsuarioDao usuarioDao = new UsuarioDao();
             Userconfig userConfig = new Userconfig();
-            UsuarioBean usuarioBean = new UsuarioBean();
-
+            
             userConfig.setNotificacionesFollow(true);
             userConfig.setNotificacionesMentions(true);
             userConfig.setNotificacionesRetweet(true);
             
-            try {
-              String key = hash.SHA1b(usuario.getNombre());
-              usuarioBean.setKey(key);
-            } 
-            catch (Exception e) {
-                System.err.println("Hashkey: " + e);
-            }
-            
-            
-            usuarioBean = usuarioDao.registrar(usuario);
+            UsuarioBean usuarioBean = usuarioDao.registrar(usuario);
             userConfig.setIdUsuario(usuarioBean.getId());
             
                if(usuarioDao.setNotificaciones(userConfig) && usuarioDao.iniciarSesion(usuario, request)){
@@ -172,4 +161,13 @@ public class UsuarioController {
                    return "redirect:/";
                }
         }
+        
+        @RequestMapping(value="/TOP10" , method=RequestMethod.GET)
+        public String getTOP10(Model model, UsuarioDao usuarioDao) {
+            
+            model.addAttribute("usuarios",usuarioDao.getTOP());
+             
+            return ("usuario/TOP10");
+        }
+        
 }
