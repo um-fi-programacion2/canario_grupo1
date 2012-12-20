@@ -6,12 +6,11 @@
 <div class="container-fluid" >
     <div class="row-fluid">
         <div class="span3">
-                    <div class="well sidebar-nav" id="hashTop">
-                    </div>
-                    <div class="well sidebar-nav" id="usersTop">
-                    </div>
+            <div class="well sidebar-nav" id="hashTop">
+            </div>
+            <div class="well sidebar-nav" id="usersTop">
+            </div>
         </div>
-
         <div class="span9">
             <div class="hero-unit" style="padding:15px;">
                 <div class="row-fluid">

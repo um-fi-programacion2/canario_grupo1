@@ -30,10 +30,12 @@ public class HashtagController {
         @RequestMapping(value="/TOP10" , method=RequestMethod.GET)
         public String getTOP10(Model model, HashtagDao hashtagDao) {
             
-            model.addAttribute("tags",hashtagDao.getTOP());
+            model.addAttribute("tags",hashtagDao.getTop());
              
             return ("hashtag/TOP10");
         }
+
+        
         
 }
 

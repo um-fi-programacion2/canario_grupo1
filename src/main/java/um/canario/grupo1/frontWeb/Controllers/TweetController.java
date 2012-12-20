@@ -41,8 +41,11 @@ public class TweetController {
     @RequestMapping(value = "/nuevo/procesar", method = RequestMethod.POST)
     public String nuevoTweet(@ModelAttribute("tweet") TweetBean tweetBean, HttpServletRequest request) {
         TweetLogic tweetLogic = new TweetLogic();
-        tweetLogic.procesarTweet(tweetBean, request);
-        return "redirect:../../timeline/";
+        if(tweetLogic.procesarTweet(tweetBean, request)){
+            return "redirect:../../timeline/";
+        }
+        else
+            return "tweet/nuevo";
     }
 
     @RequestMapping(value = "/{nombreDeUsuario}", method = RequestMethod.GET)

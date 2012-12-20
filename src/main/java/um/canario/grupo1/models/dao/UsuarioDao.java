@@ -1,8 +1,12 @@
 package um.canario.grupo1.models.dao;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -54,13 +58,12 @@ public class UsuarioDao extends HibernateDaoSupport {
         }
     }
 
-    
     public boolean iniciarSesion(UsuarioBean usuario, HttpServletRequest request) {
 
         List<UsuarioBean> listaUsuarios = null;
 
         SessionFactory sf = HibernateUtil.getSessionFactory();
-        Session s = sf.openSession();    
+        Session s = sf.openSession();
         Query query = s.createQuery("FROM UsuarioBean u where u.email = :mail and u.password = :pass");
         query.setParameter("mail", usuario.getEmail());
         query.setParameter("pass", usuario.getPassword());
@@ -110,7 +113,26 @@ public class UsuarioDao extends HibernateDaoSupport {
         return usuarioBean;
     }
 
-    
+    public UsuarioBean getUsuarioConEmail(String email) {
+
+        UsuarioBean usuarioBean = new UsuarioBean();
+        SessionFactory sf = HibernateUtil.getSessionFactory();
+
+        Session s = sf.openSession();
+        Query query = s.createQuery("FROM UsuarioBean u where u.email = :email");
+        query.setParameter("email", email);
+
+        try {
+            usuarioBean = (UsuarioBean) query.list().get(0);
+        } catch (Exception e) {
+            System.err.println("getUsuario, nombreUsuario=null (noexisteelusuario) !-->" + e);
+            usuarioBean.setId(-1);
+        }
+        s.close();
+
+        return usuarioBean;
+    }
+
     public UsuarioBean getUsuarioConID(Integer idUsuario) {
 
         UsuarioBean usuarioBean = new UsuarioBean();
@@ -131,7 +153,6 @@ public class UsuarioDao extends HibernateDaoSupport {
         return usuarioBean;
     }
 
-    
     public UsuarioBean getUsuarioKey(String key) {
 
         UsuarioBean usuarioBean = new UsuarioBean();
@@ -154,7 +175,6 @@ public class UsuarioDao extends HibernateDaoSupport {
         return usuarioBean;
     }
 
-    
     public List<UsuarioBean> getUsuarios(String busqueda) {
 
         List<UsuarioBean> usuarios = new ArrayList<UsuarioBean>();
@@ -173,17 +193,6 @@ public class UsuarioDao extends HibernateDaoSupport {
         return usuarios;
     }
 
-    
-    public boolean cerrarSesion(HttpServletRequest request) {
-
-        request.getSession().removeAttribute("email");
-        request.getSession().removeAttribute("id");
-        request.getSession().invalidate();
-
-        return true;
-    }
-
-    
     public boolean modificarPerfil(UsuarioBean usuario, HttpServletRequest request) {
 
         try {
@@ -212,7 +221,6 @@ public class UsuarioDao extends HibernateDaoSupport {
         }
     }
 
-    
     public boolean actualizarImagen(String filename, HttpServletRequest request) {
         try {
             SessionFactory sesion = HibernateUtil.getSessionFactory();
@@ -234,7 +242,6 @@ public class UsuarioDao extends HibernateDaoSupport {
         }
     }
 
-    
     public boolean actualizarNotificaciones(Userconfig usuario) {
         try {
             SessionFactory sesion = HibernateUtil.getSessionFactory();
@@ -261,7 +268,6 @@ public class UsuarioDao extends HibernateDaoSupport {
 
     }
 
-    
     public boolean setNotificaciones(Userconfig usuario) {
 
         try {
@@ -280,7 +286,6 @@ public class UsuarioDao extends HibernateDaoSupport {
         }
     }
 
-    
     public Userconfig getNotificaciones(Integer idUsuario) {
 
         Userconfig userConfig = new Userconfig();
@@ -301,7 +306,6 @@ public class UsuarioDao extends HibernateDaoSupport {
         return userConfig;
     }
 
-    
     public List<UsuarioBean> getTOP() {
 
         List<UsuarioBean> usuarios = new ArrayList<UsuarioBean>();
@@ -317,7 +321,33 @@ public class UsuarioDao extends HibernateDaoSupport {
             t.commit();
             usuarios = query.list();
             sf.close();
-            
+
+            return usuarios;
+
+        } catch (Exception ex) {
+            System.err.println("Error  getTOP()!-->" + ex.getMessage());
+
+            return null;
+        }
+    }
+
+    public List<UsuarioBean> getTOPCiudad(String ciudad) {
+
+        List<UsuarioBean> usuarios = new ArrayList<UsuarioBean>();
+
+        try {
+            SessionFactory sf = HibernateUtil.getSessionFactory();
+            Transaction t = null;
+            Session s = sf.openSession();
+            t = s.beginTransaction(); // start a new transaction
+            Query query = s.createQuery("From UsuarioBean u where id IN (Select idUsuario From TweetBean group by idUsuario order by count(*) desc) and u.localidad= :ciudad");
+            query.setParameter("ciudad", ciudad);
+            query.setFirstResult(0);
+            query.setMaxResults(10);
+            t.commit();
+            usuarios = query.list();
+            sf.close();
+
             return usuarios;
 
         } catch (Exception ex) {

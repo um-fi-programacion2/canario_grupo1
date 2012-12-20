@@ -184,7 +184,7 @@ public class HashtagDao {
         return IN; //devuelve algo como (12,232,42,24)
     }
 
-    public List<Tags> getTOP() {
+    public List<Tags> getTop() {
 
         List<Tags> tags = new ArrayList<Tags>();
 
