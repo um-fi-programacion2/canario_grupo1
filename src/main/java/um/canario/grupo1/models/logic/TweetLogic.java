@@ -39,9 +39,18 @@ public class TweetLogic {
                                System.err.println("EmailMencionado enviado a: " + usuarioBean.getEmail());
                            } catch (Exception e) {
                             System.err.println("Error enviando mail:" + destinatario + " |||||||||| " + e );
+                            return false;
                            }
                        }
                    }
+            }
+        }
+        
+        
+        if(!hashtags.isEmpty()){
+            HashtagDao hashtagDao = new HashtagDao();
+            if(!hashtagDao.guardar(hashtags, tweetBean.getId())){
+                return false;
             }
         }
               

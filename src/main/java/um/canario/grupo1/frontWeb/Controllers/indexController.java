@@ -19,6 +19,20 @@ import um.canario.grupo1.models.dao.UsuarioDao;
 @RequestMapping(value = "/")
 public class indexController {
 
+    
+    
+    public String indexController(HttpServletRequest request) {
+        if(request.getSession(false)==null){
+            
+            
+           return this.index(null);
+        }
+        
+        return "";
+    }
+    
+    
+
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("usuario", new UsuarioBean());
@@ -32,6 +46,14 @@ public class indexController {
 
         request.getSession().setAttribute("offsetTimeline","0");
         return "timeline";
+    }
+    
+    @RequestMapping(value = "timeline/reset", method = RequestMethod.GET)
+    public String timelineReset(HttpServletRequest request) {
+
+        request.getSession().setAttribute("offsetTimeline","0");
+        
+        return "redirect:/timeline/refresh";
     }
     
     @RequestMapping(value = "timeline/refresh", method = RequestMethod.GET)

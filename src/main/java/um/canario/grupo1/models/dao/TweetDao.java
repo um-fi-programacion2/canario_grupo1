@@ -86,6 +86,28 @@ public class TweetDao extends HibernateDaoSupport {
         }
     }
 
+    public List<TweetBean> getTweetsRefresh(String Usuario, String offset) {
+        Integer offsetInt = Integer.parseInt(offset);
+        try {
+            UsuarioDao usuarioDao = new UsuarioDao();
+            SessionFactory sf = HibernateUtil.getSessionFactory();
+            Transaction t = null;
+            Session s = sf.openSession();
+            t = s.beginTransaction(); // start a new transaction
+            Query query = s.createQuery("FROM TweetBean tweet where tweet.idUsuario = :id order by tweet.fecha desc");
+            query.setParameter("id", usuarioDao.getUsuario(Usuario).getId());
+            query.setFirstResult(offsetInt);
+            query.setMaxResults(5);
+            t.commit();
+                return (List<TweetBean>) query.list();
+
+        } catch (Exception ex) {
+            System.err.println("Error !-->" + ex.getMessage());
+
+            return null;
+        }
+    }
+
     public List<TweetBean> getTimeline(String IN, String offset) {
 
         List<TweetBean> tweetsUsuarios = new ArrayList<TweetBean>();
@@ -93,27 +115,25 @@ public class TweetDao extends HibernateDaoSupport {
         Integer offsetInt = Integer.parseInt(offset);
 
         try {
-             System.err.println("ERROR EN EL IN: " + IN);
-             SessionFactory sf = HibernateUtil.getSessionFactory();
-             Session s = sf.openSession();
-             Transaction t = null;
-             t = s.beginTransaction();
-             Query query = s.createQuery("FROM TweetBean u where u.idUsuario IN " + IN + " order by tweet.fecha desc");
-            
-             query.setFirstResult(offsetInt);
-             query.setMaxResults(5);
-             t.commit();
+            SessionFactory sf = HibernateUtil.getSessionFactory();
+            Session s = sf.openSession();
+            Transaction t = null;
+            t = s.beginTransaction();
+            Query query = s.createQuery("FROM TweetBean u where u.idUsuario IN " + IN + " order by tweet.fecha desc");
 
-             tweetsUsuarios = (List<TweetBean>) query.list();
-             
-             s.close();
+            query.setFirstResult(offsetInt);
+            query.setMaxResults(5);
+            t.commit();
 
-        } 
-        catch (Exception e) {
+            tweetsUsuarios = (List<TweetBean>) query.list();
+
+            s.close();
+
+        } catch (Exception e) {
             System.err.println("ErrorHIBERNATE !-->" + e);
         }
-        
-        
+
+
         return tweetsUsuarios;
     }
 }

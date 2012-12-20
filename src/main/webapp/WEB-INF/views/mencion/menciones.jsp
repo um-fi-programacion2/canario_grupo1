@@ -1,12 +1,5 @@
 <%@page contentType="text/html" pageEncoding="windows-1252"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-
-    <h5>Tweets en los que se menciona a @${user}</h5></div>
-        </div>
-
-        <div class="row-fluid">
-            <div class="well" id="h" style="">
             
         <c:forEach items="${tweets}" var="tweet">
             <c:forEach items="${usuarios}" var="usuario">
@@ -51,3 +44,4 @@
                 </c:if>
             </c:forEach>
         </c:forEach>
+        <div id="mentions"></div>

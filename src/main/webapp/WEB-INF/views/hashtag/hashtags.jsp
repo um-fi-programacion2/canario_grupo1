@@ -5,41 +5,31 @@
 
 
 <div class="container-fluid" >
-      <div class="row-fluid">
+    <div class="row-fluid">
         <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Actualidad con el mundo</li>
-              <li><div style="padding: 0px;" id="123">
+            <div class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">Actualidad con el mundo</li>
+                    <li><div style="padding: 0px;" id="123">
                             <script type="text/javascript">
-                            var tweet = "#${tag}";
-                            prueba = document.getElementById("123");
-                            prueba.innerHTML = tweet.parseHashtag();
-                          </script>
+                                var tweet = "#${tag}";
+                                prueba = document.getElementById("123");
+                                prueba.innerHTML = tweet.parseHashtag();
+                            </script>
                         </div>
-              </li>
-            </ul>
-          </div><!--/.well -->
+                    </li>
+                </ul>
+            </div><!--/.well -->
         </div><!--/span-->
-        
-        <div class="span9">
-            
-          
-          <div class="row-fluid">
-              <div class="well" id="cuerpo" style="background-color: #fff; display: none;">
-                  
-                  
-                  
-                  <h5>Resultado de la búsqueda</h5></div>
-        </div>
 
-        <div class="row-fluid">
-            <div class="well" id="h" style="">
-               <c:forEach items="${tweets}" var="tweet">
-                    <c:forEach items="${usuarios}" var="usuario">
-                        <c:if test="${usuario.id == tweet.idUsuario}">
-                            <div style="border-bottom: 1px #bce8f1 solid; margin-bottom: 15px; padding-bottom: 15px;">
-                                 <div style="padding: 0px; float:left; padding-top: 5px;">
+        <div class="span9">
+            <div class="row-fluid">
+                <div class="well" id="h" style="">
+                    <c:forEach items="${tweets}" var="tweet">
+                        <c:forEach items="${usuarios}" var="usuario">
+                            <c:if test="${usuario.id == tweet.idUsuario}">
+                                <div style="border-bottom: 1px #bce8f1 solid; margin-bottom: 15px; padding-bottom: 15px;">
+                                    <div style="padding: 0px; float:left; padding-top: 5px;">
                                         <a href="${pageContext.request.contextPath}/usuario/${usuario.nombre}" style="font-size:x-small">
                                             <img src="${pageContext.request.contextPath}/resources/img/usuarios/${usuario.imagen}" class="img-rounded" width="50" style="margin-right: 15px;" >
                                         </a>
@@ -54,22 +44,37 @@
                                     </div>
                                     <div style="padding: 0px;" id="${tweet.id}">
                                         <script type="text/javascript">
-                                        var tweet = "${tweet.tweet}";
-                                        prueba = document.getElementById("${tweet.id}");
-                                        prueba.innerHTML = tweet.parseUsername().parseHashtag();
-                                      </script>
+                                            var tweet = "${tweet.tweet}";
+                                            prueba = document.getElementById("${tweet.id}");
+                                            prueba.innerHTML = tweet.parseUsername().parseHashtag();
+                                        </script>
                                     </div>
+                                    <div style="padding: 0px; text-align: right;" >
+                                        <c:if test="${tweet.autor == 0}">
+                                            <a href="${pageContext.request.contextPath}/tweet/retweet/${tweet.id}" style="font-size:x-small">
+                                                <span style="margin-right: 25px"><i class="icon-retweet"></i> retweet</span>
+                                            </a>
+                                        </c:if>
+                                        <c:if test="${tweet.autor != 0}">
+                                            <a href="${pageContext.request.contextPath}/usuario/${tweet.autor}" style="font-size:x-small">
+                                                <span style="margin-right: 25px"><i class="icon-fire"></i> retweeted :: @${tweet.autor}</span>
+                                            </a>
+                                        </c:if>
+                                        <a href="${pageContext.request.contextPath}/tweet/nuevo/${usuario.nombre}" style="font-size:x-small">
+                                            <span style="margin-right: 25px"><i class="icon-share"></i> reply</span>
+                                        </a>
+                                    </div>
+                                </div>
 
-                            </div>
-                        </c:if>
+                            </c:if>
+                        </c:forEach>
                     </c:forEach>
-               </c:forEach>
-                
-                  
-              </div>
-          </div><!--/row-->
-        </div><!--/span-->
-      </div><!--/row-->
 
+
+                </div>
+            </div><!--/row-->
+        </div><!--/span-->
+    </div><!--/row-->
+</div>
 
 <jsp:include page="../footer.jsp" />

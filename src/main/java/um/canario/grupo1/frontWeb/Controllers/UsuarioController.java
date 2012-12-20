@@ -50,22 +50,27 @@ public class UsuarioController {
         }   
         
         @RequestMapping(value="/{nombreDeUsuario}" , method=RequestMethod.GET)
-        public String home(@PathVariable String nombreDeUsuario, HttpServletRequest request, Model model, ModelAndView mav, UsuarioDao usuarioDao, TweetDao tweetDao, FollowDao followDao) {    
+        public String home(@PathVariable String nombreDeUsuario, HttpServletRequest request, Model model,  UsuarioDao usuarioDao, TweetDao tweetDao, FollowDao followDao) {    
             
+            request.getSession().setAttribute("offsetTweets", "0"); //Setea a cero el offset de la paginacion
+            request.getSession().setAttribute("offsetFollowers", "0"); // en el home para tweets y mentions
+            request.getSession().setAttribute("offsetFollowings", "0"); // en el home para tweets y mentions
+            request.getSession().setAttribute("offsetMentions", "0"); // en el home para tweets y mentions
             
-            UsuarioBean usuarioBean = usuarioDao.getUsuario(nombreDeUsuario);
             String follower = request.getSession().getAttribute("id").toString();
             
+            UsuarioBean usuario = usuarioDao.getUsuario(nombreDeUsuario);
+            
             model.addAttribute("tweets", tweetDao.getTweets(nombreDeUsuario));
-            model.addAttribute("user", usuarioDao.getUsuario(nombreDeUsuario));
+            model.addAttribute("user", usuario);
             model.addAttribute("relaciones", followDao.getRelaciones(follower));
             model.addAttribute("sessionId", request.getSession().getAttribute("id"));
             System.err.println("FollowerID: " + follower);
             
-            
-            mav.setViewName("usuario/home");
-            
-            //mav.
+            if(usuario.getId()==-1){
+               return "usuario/notFound";
+            }
+
             
             return "usuario/home";
             

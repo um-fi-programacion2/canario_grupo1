@@ -1,6 +1,6 @@
       <hr>
 
-      <footer>
+      <footer style="text-align: center">
         <p>UM  :: Grupo1, cátedra de Programación II &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&copy;2012</p>
       </footer>
 

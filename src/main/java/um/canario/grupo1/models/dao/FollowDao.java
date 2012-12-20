@@ -82,12 +82,12 @@ public class FollowDao extends HibernateDaoSupport {
             return lista;
 
         } catch (Exception e) {
-            System.err.println("Errorasd !-->" + e.getMessage());
+            System.err.println("ErrorHIBERNATE Errorasd getRelaciones!-->" + e.getMessage());
             return lista;
         }
     }
 
-        public List<Relaciones> getRelaciones2(String follower) {
+    public List<Relaciones> getRelaciones2(String follower) {
         List<Relaciones> lista = new ArrayList<Relaciones>();
 
         try {
@@ -104,11 +104,11 @@ public class FollowDao extends HibernateDaoSupport {
             return lista;
 
         } catch (Exception e) {
-            System.err.println("Errorasd !-->" + e.getMessage());
+            System.err.println("ErrorHIBERNATE getRelaciones2!-->" + e.getMessage());
             return lista;
         }
     }
-        
+
     public String getFollowingsString(String id) {
 
         List<Relaciones> relaciones = new ArrayList<Relaciones>();
@@ -132,12 +132,12 @@ public class FollowDao extends HibernateDaoSupport {
             IN = IN + ")";
         } else {
             IN = "(null)";
+            System.err.println("ErrorHIBERNATE getFollowingsString !-->" + IN);
         }
 
-        System.err.println("getFollowingsString !-->" + IN);
-        
         return IN; //devuelve algo como (12,232,42,24)
     }
+
     public String getFollowersString(String id) {
 
         List<Relaciones> relaciones = new ArrayList<Relaciones>();
@@ -161,13 +161,12 @@ public class FollowDao extends HibernateDaoSupport {
             IN = IN + ")";
         } else {
             IN = "(null)";
+            System.err.println("ErrorHIBERNATE getFollowersString !-->" + IN);
         }
 
-        System.err.println("getFollowingsString !-->" + IN);
-        
         return IN; //devuelve algo como (12,232,42,24)
     }
-    
+
     public List<UsuarioBean> getFollowings(String id) {
 
         List<UsuarioBean> usuarios = new ArrayList<UsuarioBean>();
@@ -180,7 +179,7 @@ public class FollowDao extends HibernateDaoSupport {
         try {
             usuarios = (List<UsuarioBean>) query.list();
         } catch (Exception e) {
-            System.err.println("ErrorHIBERNATE !-->" + e);
+            System.err.println("ErrorHIBERNATE getFollowings!-->" + e);
         }
         s.close();
 
@@ -199,7 +198,49 @@ public class FollowDao extends HibernateDaoSupport {
         try {
             usuarios = (List<UsuarioBean>) query.list();
         } catch (Exception e) {
-            System.err.println("ErrorHIBERNATE !-->" + e);
+            System.err.println("ErrorHIBERNATE getFollowers!-->" + e);
+        }
+        s.close();
+
+        return usuarios;
+    }
+
+    public List<UsuarioBean> getFollowingsRefresh(String id, String offset) {
+        Integer offsetInt = Integer.parseInt(offset);
+
+        List<UsuarioBean> usuarios = new ArrayList<UsuarioBean>();
+        SessionFactory sf = HibernateUtil.getSessionFactory();
+        Session s = sf.openSession();
+        String ONO = getFollowingsString(id);
+
+        Query query = s.createQuery("FROM UsuarioBean u where u.id IN  " + ONO);
+        query.setFirstResult(offsetInt);
+        query.setMaxResults(5);
+        try {
+            usuarios = (List<UsuarioBean>) query.list();
+        } catch (Exception e) {
+            System.err.println("ErrorHIBERNATE getFollowingsRefresh!-->" + e);
+        }
+        s.close();
+
+        return usuarios;
+    }
+
+    public List<UsuarioBean> getFollowersRefresh(String id, String offset) {
+        Integer offsetInt = Integer.parseInt(offset);
+
+        List<UsuarioBean> usuarios = new ArrayList<UsuarioBean>();
+        SessionFactory sf = HibernateUtil.getSessionFactory();
+        Session s = sf.openSession();
+        String ONO = getFollowersString(id);
+
+        Query query = s.createQuery("FROM UsuarioBean u where u.id IN  " + ONO);
+        query.setFirstResult(offsetInt);
+        query.setMaxResults(5);
+        try {
+            usuarios = (List<UsuarioBean>) query.list();
+        } catch (Exception e) {
+            System.err.println("ErrorHIBERNATE getFollowersRefresh!-->" + e);
         }
         s.close();
 
