@@ -20,7 +20,6 @@
                 </ul>
             </div><!--/.well -->
         </div><!--/span-->
-
         <div class="span9">
             <div class="hero-unit" style="padding:15px;">
                 <div class="row-fluid">
@@ -97,7 +96,7 @@
             </div>
             </div><!--/span-->
         </div><!--/row-->
-        <script>
+        <script>   
                     cargar('#cuerpo','${pageContext.request.contextPath}/tweet/${user.nombre}');
                     tweets();
         </script>

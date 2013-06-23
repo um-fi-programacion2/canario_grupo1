@@ -39,7 +39,6 @@
         <script src="${pageContext.request.contextPath}/resources/js/SpryValidationTextarea.js" type="text/javascript"></script>
         <link href="${pageContext.request.contextPath}/resources/css/SpryValidationTextarea.css" rel="stylesheet" type="text/css" />        
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-        <script stype="text/javascript" src="${pageContext.request.contextPath}/resources/js/cargadores.js"></script>
         <script>
             String.prototype.parseUsername = function() {
                 return this.replace(/[@]+[A-Za-z0-9-_]+/g, function(u) {
@@ -54,6 +53,8 @@
                 });
             };
         </script>
+                <script stype="text/javascript" src="${pageContext.request.contextPath}/resources/js/cargadores.js"></script>
+
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
           <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
