@@ -50,7 +50,7 @@ public class WSController {
                     tweets = tweetDao.getTweets(usuario.getNombre());
                     return tweets;
                 }
-		return tweets;
+		return null;
 	}
         
         
@@ -60,7 +60,7 @@ public class WSController {
                  
                 List<UsuarioBean> followers = new ArrayList<UsuarioBean>();
 		UsuarioBean usuario = new UsuarioBean();
-		FollowDao follow = new FollowDao();
+		FollowDao followDao = new FollowDao();
 		UsuarioDao usuarioDao = new UsuarioDao();
                 usuario = usuarioDao.getUsuarioKey(USERKEYa);
                     apps.add(iOS);
@@ -69,7 +69,7 @@ public class WSController {
                 
                 if( (usuario.getId() != -1)  && (apps.contains(APPKEYa))){   //Si la USERKEY no corresponde con ningún usuario
                     
-                    followers = follow.getFollowers(usuario.getId().toString());
+                    followers = followDao.getFollowers(usuario.getId().toString());
                     
                     return followers;
                 }
@@ -83,7 +83,7 @@ public class WSController {
                  
                 List<UsuarioBean> followings = new ArrayList<UsuarioBean>();
 		UsuarioBean usuario = new UsuarioBean();
-		FollowDao follow = new FollowDao();
+		FollowDao followDao = new FollowDao();
 		UsuarioDao usuarioDao = new UsuarioDao();
                 usuario = usuarioDao.getUsuarioKey(USERKEYb);
                     apps.add(iOS);
@@ -92,7 +92,7 @@ public class WSController {
                 
                 if( (usuario.getId() != -1)  && (apps.contains(APPKEYb))){   //Si la USERKEY no corresponde con ningún usuario
                     
-                    followings = follow.getFollowings(usuario.getId().toString());
+                    followings = followDao.getFollowings(usuario.getId().toString());
                     
                     return followings;
                 }
