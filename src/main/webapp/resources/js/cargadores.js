@@ -23,6 +23,7 @@
                 $("#liFollowings").removeClass("active");
                 $("#liMentions").removeClass("active");
             }
+            
             function mentions(){
                 $("#tweetsButton").hide();
                 $("#mentionsButton").show();                
@@ -79,4 +80,3 @@
                 $(div + "unfollow").hide();
                 $(div + "follow").show();
             }
-    
